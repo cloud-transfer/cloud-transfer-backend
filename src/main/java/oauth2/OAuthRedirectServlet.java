@@ -46,13 +46,15 @@ public class OAuthRedirectServlet extends HttpServlet
 	    String oauthUrl = "https://accounts.google.com/o/oauth2/auth";
 
 	    URIBuilder builder = new URIBuilder(oauthUrl);
-	    builder.addParameter("scope", "https://www.googleapis.com/auth/drive");
+	    builder.addParameter("scope", "https://www.googleapis.com/auth/drive.file");
 	    builder.addParameter("access_type", "offline");
 	    builder.addParameter("redirect_uri", System.getenv("redirect_uri"));
 	    builder.addParameter("response_type", "code");
 	    builder.addParameter("client_id", System.getenv("client_id"));
+	    builder.addParameter("approval_prompt", "force");
 
 	    String redirectUrl = builder.build().toString();
+	    System.err.println(redirectUrl);
 	    response.sendRedirect(redirectUrl);
 	}
 

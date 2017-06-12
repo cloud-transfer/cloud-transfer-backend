@@ -5,6 +5,7 @@
  */
 package oauth2;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.OAuthException;
 import java.io.IOException;
@@ -13,7 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import model.GoogleApiTokenInfo;
-import model.OAuthError;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -55,13 +55,16 @@ public class OAuthUtility
 	}
 	else
 	{
-	    OAuthError oAuthError = objectMapper.readValue(inputStream, OAuthError.class);
-	    throw new OAuthException(oAuthError.toString());
+	    JsonNode rootNode = objectMapper.readTree(inputStream);
+	    OAuthException exception = new OAuthException();
+	    exception.setError(rootNode.get("error").asText());
+	    exception.setDescription(rootNode.get("description").asText());
+	    throw exception;
 	}
     }
 
     public static boolean isHttpSuccessStatusCode(int httpStatusCode)
     {
-	return httpStatusCode % 100 == 2;
+	return httpStatusCode / 100 == 2;
     }
 }

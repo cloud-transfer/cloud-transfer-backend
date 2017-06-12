@@ -5,6 +5,7 @@
  */
 package oauth2;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.OAuthException;
 import java.io.IOException;
@@ -19,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import javax.servlet.http.HttpSession;
 import model.GoogleApiTokenInfo;
-import model.OAuthError;
 import static oauth2.OAuthUtility.isHttpSuccessStatusCode;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -58,8 +59,10 @@ public class OAuthCallBackServlet extends HttpServlet
 	    String code = request.getParameter("code");
 	    try
 	    {
-		GoogleApiTokenInfo token = getAccessToken(code);
-		out.print(token);
+		GoogleApiTokenInfo tokenInfo = getAccessToken(code);
+		HttpSession session = request.getSession();
+		session.setAttribute("token", tokenInfo);
+		out.print(tokenInfo);
 	    }
 	    catch (OAuthException e)
 	    {
@@ -80,7 +83,7 @@ public class OAuthCallBackServlet extends HttpServlet
     public GoogleApiTokenInfo getAccessToken(String code) throws IOException
     {
 	String tokenUrl = "https://www.googleapis.com/oauth2/v4/token";
-	String redirectUri = (String) getServletContext().getAttribute("oauth_redirect_url");
+	String redirectUri = System.getenv("redirect_uri");
 	HttpClient httpClient = new DefaultHttpClient();
 	HttpPost httpPost = new HttpPost(tokenUrl);
 
@@ -104,8 +107,11 @@ public class OAuthCallBackServlet extends HttpServlet
 	}
 	else
 	{
-	    OAuthError oAuthError = objectMapper.readValue(inputStream, OAuthError.class);
-	    throw new OAuthException(oAuthError.toString());
+	    JsonNode rootNode = objectMapper.readTree(inputStream);
+	    OAuthException exception = new OAuthException();
+	    exception.setError(rootNode.get("error").asText());
+	    exception.setDescription(rootNode.get("error_description").asText());
+	    throw exception;
 	}
     }
 
