@@ -22,11 +22,11 @@ import org.apache.http.client.HttpResponseException;
  *
  * @author Dhaval
  */
-@WebServlet(name = "TestringServlet", urlPatterns =
+@WebServlet(name = "TestingServlet", urlPatterns =
 {
-    "/TestringServlet"
+    "/TestingServlet"
 })
-public class TestringServlet extends HttpServlet
+public class TestingServlet extends HttpServlet
 {
 
     /**
