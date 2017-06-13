@@ -18,7 +18,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 /**
@@ -28,11 +28,11 @@ import org.apache.http.message.BasicNameValuePair;
 public class OAuthUtility
 {
 
-    public static GoogleApiTokenInfo refreshToken(GoogleApiTokenInfo token) throws UnsupportedEncodingException, IOException
+    public static void refreshToken(GoogleApiTokenInfo token) throws UnsupportedEncodingException, IOException
     {
 	String refreshToken = token.getRefreshToken();
 	String tokenUrl = "https://www.googleapis.com/oauth2/v4/token";
-	HttpClient httpClient = new DefaultHttpClient();
+	HttpClient httpClient = HttpClientBuilder.create().build();
 	HttpPost httpPost = new HttpPost(tokenUrl);
 
 	List<NameValuePair> parameters = new ArrayList<>();
@@ -49,9 +49,9 @@ public class OAuthUtility
 
 	if (isHttpSuccessStatusCode(httpStatusCode))
 	{
-	    token = objectMapper.readValue(inputStream, GoogleApiTokenInfo.class);
-	    token.setRefreshToken(refreshToken);
-	    return token;
+	    JsonNode rootNode = objectMapper.readTree(inputStream);
+	    String newToken = rootNode.get("token").asText();
+	    token.setAccessToken(newToken);
 	}
 	else
 	{

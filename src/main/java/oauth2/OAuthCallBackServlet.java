@@ -27,7 +27,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 /**
@@ -84,7 +84,7 @@ public class OAuthCallBackServlet extends HttpServlet
     {
 	String tokenUrl = "https://www.googleapis.com/oauth2/v4/token";
 	String redirectUri = System.getenv("redirect_uri");
-	HttpClient httpClient = new DefaultHttpClient();
+	HttpClient httpClient = HttpClientBuilder.create().build();
 	HttpPost httpPost = new HttpPost(tokenUrl);
 
 	List<NameValuePair> parameters = new ArrayList<>();
