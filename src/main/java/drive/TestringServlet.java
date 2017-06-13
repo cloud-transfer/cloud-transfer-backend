@@ -81,6 +81,8 @@ public class TestringServlet extends HttpServlet
 
 	    if (errorMessage != null)
 		out.print(errorMessage);
+	    else
+		out.print("Successfully Uploaded!");
 	}
     }
 
