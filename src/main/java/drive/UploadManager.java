@@ -20,11 +20,11 @@ import model.SuccessStatus;
 public class UploadManager
 {
 
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
     private final HashMap<String, DriveUploader> idToUploaderMap = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
     private static final UploadManager UPLOAD_MANAGER;
-
+    
     static
     {
 	UPLOAD_MANAGER = new UploadManager();
