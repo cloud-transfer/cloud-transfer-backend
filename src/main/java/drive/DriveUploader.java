@@ -11,9 +11,15 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.ErrorStatus;
 import model.GoogleApiTokenInfo;
+import model.Status;
+import model.SuccessStatus;
 import oauth2.OAuthUtility;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.Header;
@@ -44,8 +50,9 @@ public class DriveUploader
     private static final String POST_URL = "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable";
     private String PUT_URL;
     private long uploadedBytes = 0;
-    private final long chunkSize = 100 * 4 * 256 * 1024; // 100 MB
+    private final long chunkSize = 10 * 4 * 256 * 1024; // 100 MB
     private String errorMessage;
+    private String status = "waiting";
 
     public DriveUploader(URL downloadUrl, GoogleApiTokenInfo tokenInfo)
     {
@@ -53,25 +60,47 @@ public class DriveUploader
 	this.tokenInfo = tokenInfo;
     }
 
-    public DriveUploader(URL downloadUrl, String fileName, GoogleApiTokenInfo tokenInfo)
+    public DriveUploader(URL downloadUrl, GoogleApiTokenInfo tokenInfo, String fileName)
     {
 	this(downloadUrl, tokenInfo);
 	this.fileName = fileName;
     }
 
-    public void upload() throws IOException
+    public void init() throws NoHttpResponseException, UnknownHostException, HttpResponseException, IOException
     {
 	fetchFileMetadata();
 	obtainUploadUrl();
 
-	while (uploadedBytes < contentLength)
+	System.err.println("After init");
+	System.err.println(this);
+    }
+
+    public void upload()
+    {
+
+	try
 	{
-	    long end = uploadedBytes + chunkSize - 1;
+	    status = "Uploading";
 
-	    if (end >= contentLength)
-		end = contentLength - 1;
+	    while (uploadedBytes < contentLength)
+	    {
+		System.err.println("Uploaded: " + uploadedBytes);
 
-	    uploadPartially(uploadedBytes, end);
+		long end = uploadedBytes + chunkSize - 1;
+
+		if (end >= contentLength)
+		    end = contentLength - 1;
+
+		uploadPartially(uploadedBytes, end);
+	    }
+
+	    status = "Upload Complete";
+	}
+	catch (Exception ex)
+	{
+	    errorMessage = ex.toString();
+	    System.err.println("error message: " + errorMessage);
+	    Logger.getLogger(DriveUploader.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
 
@@ -181,5 +210,19 @@ public class DriveUploader
     public String toString()
     {
 	return "DriveUploader{" + "downloadUrl=" + downloadUrl + ", contentLength=" + contentLength + ", contentType=" + contentType + ", fileName=" + fileName + ", tokenInfo=" + tokenInfo + ", PUT_URL=" + PUT_URL + ", uploadedBytes=" + uploadedBytes + ", chunkSize=" + chunkSize + '}';
+    }
+
+    public Status getStatus()
+    {
+	if (errorMessage != null)
+	    return new ErrorStatus(errorMessage);
+
+	double percentageComplete = (double) uploadedBytes / (double) contentLength * 100D;
+
+	SuccessStatus successStatus = new SuccessStatus();
+
+	successStatus.setCompletePercentage(percentageComplete);
+	successStatus.setProcessingStatus(status);
+	return successStatus;
     }
 }

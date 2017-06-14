@@ -60,11 +60,11 @@ public class TestingServlet extends HttpServlet
 	    if (fileName == null)
 		uploader = new DriveUploader(url, tokenInfo);
 	    else
-		uploader = new DriveUploader(url, fileName, tokenInfo);
+		uploader = new DriveUploader(url, tokenInfo, fileName);
 
 	    try
 	    {
-		uploader.upload();
+		uploader.init();
 	    }
 	    catch (NoHttpResponseException ex)
 	    {
@@ -78,11 +78,17 @@ public class TestingServlet extends HttpServlet
 	    {
 		errorMessage = "Error: " + ex.getStatusCode() + " " + ex.getLocalizedMessage();
 	    }
+	    catch (IOException ex)
+	    {
+		errorMessage = "ErrorMessage: " + ex.getLocalizedMessage();
+	    }
+
+	    String id = UploadManager.getUploadManager().add(uploader);
 
 	    if (errorMessage != null)
 		out.print(errorMessage);
 	    else
-		out.print("Successfully Uploaded!");
+		out.print("Successfully Submitted! id = " + id);
 	}
     }
 
