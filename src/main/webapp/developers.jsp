@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 15 Jun, 2017, 6:17:32 AM
+    Document   : developers
+    Created on : 15 Jun, 2017, 12:43:34 PM
     Author     : Aditya
 --%>
 
@@ -16,7 +16,7 @@
     <jsp:attribute name="body_area">
         <div class="mui-row">
             <div class="mui-col-xs-6 mui-col-md-offset-4 mui-col-md-4">
-                <div class="mui--text-display2 mui--text-center">Save2Drive</div>
+                <div class="mui--text-display3 mui--text-center">Save2Drive</div>
             </div>
         </div>
         <br/>

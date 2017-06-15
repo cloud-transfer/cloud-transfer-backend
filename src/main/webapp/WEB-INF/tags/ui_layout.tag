@@ -33,17 +33,12 @@
             <ul>
               <li>
                   <a href="/">Home</a>
-<!--                <ul>
-                  <li><a href="#">Item 1</a></li>
-                  <li><a href="#">Item 2</a></li>
-                  <li><a href="#">Item 3</a></li>
-                </ul>-->
               </li>
               <li>
-                  <a href="#">About</a>
+                  <a href="/about">About</a>
               </li>
               <li>
-                  <a href="#">Developers</a>
+                  <a href="/developers">Developers</a>
               </li>
             </ul>
           </div>
@@ -53,8 +48,8 @@
         <header id="header">
             <div class="mui-appbar mui--appbar-line-height">
               <div class="mui-container-fluid">
-                <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block js-show-sidedrawer">☰</a>
-                <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm js-hide-sidedrawer">☰</a>
+                <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block js-show-sidedrawer"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm js-hide-sidedrawer"><i class="fa fa-bars" aria-hidden="true"></i></a>
                 <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block"> Save2Drive </span>
               </div>
             </div>
@@ -75,7 +70,7 @@
         <footer id="footer">
             <div class="mui-container-fluid">
               <br>
-              &copy; <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) %>, Dhaval Mehta
+              &copy; <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) %>, Dhaval & Aditya
             </div>
         </footer>
         <!--/Footer-->
