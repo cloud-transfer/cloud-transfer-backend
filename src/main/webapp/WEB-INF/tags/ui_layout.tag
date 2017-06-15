@@ -18,6 +18,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="//cdn.muicss.com/mui-latest/css/mui.min.css" rel="stylesheet" type="text/css" />
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet" type="text/css" />
         <title>${title}</title>
         <jsp:invoke fragment="head_area"/>
@@ -31,18 +32,13 @@
             <div class="mui-divider"></div>
             <ul>
               <li>
-                <strong>Home</strong>
-<!--                <ul>
-                  <li><a href="#">Item 1</a></li>
-                  <li><a href="#">Item 2</a></li>
-                  <li><a href="#">Item 3</a></li>
-                </ul>-->
+                  <a href="/">Home</a>
               </li>
               <li>
-                <strong>About</strong>
+                  <a href="/about">About</a>
               </li>
               <li>
-                <strong>Dhaval Mehta</strong>
+                  <a href="/developers">Developers</a>
               </li>
             </ul>
           </div>
@@ -52,8 +48,8 @@
         <header id="header">
             <div class="mui-appbar mui--appbar-line-height">
               <div class="mui-container-fluid">
-                <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block js-show-sidedrawer">☰</a>
-                <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm js-hide-sidedrawer">☰</a>
+                <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block js-show-sidedrawer"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm js-hide-sidedrawer"><i class="fa fa-bars" aria-hidden="true"></i></a>
                 <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block"> Save2Drive </span>
               </div>
             </div>
@@ -74,7 +70,7 @@
         <footer id="footer">
             <div class="mui-container-fluid">
               <br>
-              &copy; <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) %>, Dhaval Mehta
+              &copy; <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) %>, Dhaval & Aditya
             </div>
         </footer>
         <!--/Footer-->

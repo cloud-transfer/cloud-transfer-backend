@@ -18,6 +18,13 @@ buttons {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
 }
 
+.mui-appbar
+{
+ background-color: #009688;
+ position: fixed;
+ width: 100%;
+}
+
 
 /**
  * Layout CSS
@@ -42,6 +49,9 @@ buttons {
   z-index: 2;
   background-color: #fff;
   transition: transform 0.2s;
+}
+#sidedrawer a{
+    color : black;
 }
 
 #content-wrapper {
@@ -144,19 +154,23 @@ buttons {
   padding-top: 15px;
 }
 
-#sidedrawer strong {
+#sidedrawer a {
   display: block;
   padding: 15px 22px;
   cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-#sidedrawer strong:hover {
+#sidedrawer a:hover {
   background-color: #E0E0E0;
+  text-decoration: none;
 }
 
+/*
 #sidedrawer strong + ul > li {
   padding: 6px 0px;
-}
+}*/
 
 
 /**
@@ -164,7 +178,7 @@ buttons {
  */
 
 #footer {
-  background-color: #0288D1;
+  background-color: #009688;
   color: #fff;
 }
 
@@ -172,3 +186,94 @@ buttons {
   color: #fff;
   text-decoration: underline;
 }
+
+.mui-btn--primary
+{
+    background-color: #4DB6AC;
+    color : white;
+}
+.mui-btn--primary:hover
+{
+    background-color: #4DB6AC;
+    color : white;
+}
+.mui-btn--primary:focus
+{
+    background-color: #4DB6AC;
+    color : white;
+}
+
+/* Developer Image CSS */
+
+.image-hover-text-container 
+{
+  position: relative;
+  display: inline-block;
+
+  width: auto;
+  height: auto;
+  transition: all 0.2s linear;
+}
+
+.image-hover-image 
+{
+ display: block;
+ margin: 0 auto;
+}
+.image-hover-image img
+{
+  height: 200px;
+}
+
+
+
+.image-hover-text 
+{
+  position: absolute;
+  top: 0;
+  width: 100%;  
+  height: 100%;
+  margin: 0 auto;
+  opacity: 0;
+  cursor: default;
+  transition: opacity 0.2s linear;
+}
+.image-hover-text:hover 
+{
+  opacity: 1;
+}
+
+
+.image-hover-text-bubble 
+{
+  position: relative;
+  box-sizing: border-box;
+  top: 0; left: 0; right: 100%;
+  height: 200px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #848484;
+  margin: 0 auto;
+  padding: 65% 8px 5px 8px;
+  overflow: hidden;
+  font-size: 17px;
+  color: white;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+
+.image-hover-text .image-hover-text-title
+{
+  font-size: 25px;
+  display: block;
+  color : white;
+}
+
+.image-hover-text .image-hover-text-title a
+{
+  color : white;
+  text-decoration: none;
+}
+
+
