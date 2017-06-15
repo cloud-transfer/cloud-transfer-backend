@@ -34,10 +34,6 @@
                 <li>Then relax, while we save your file to Google Drive</li>
             </ol>
         </div>
-        <div class="mui-row">
-            <br/><br/><br/><br/><br/>
-            <article>This app was developed by <a href="https://github.com/dhavalmehta1997" target="_blank">Dhaval Mehta</a></article>
-        </div>
         
     </jsp:attribute>
     
