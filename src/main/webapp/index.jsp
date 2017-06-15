@@ -27,8 +27,8 @@
         </div>
         <div class="mui-row">
             <div class="mui-col-xs-4 mui-col-md-offset-4 mui-col-md-4">
-                <button class="mui-btn mui-btn--raised mui-btn--primary" id="auth-btn"><i class="fa fa-google" aria-hidden="true"></i>
-  &nbsp;&nbsp; Authenticate With Google </button>
+                <form><button class="mui-btn mui-btn--raised mui-btn--primary" id="auth-btn" formaction="/OAuth2/OAuthRedirectServlet"><i class="fa fa-google" aria-hidden="true"></i>
+  &nbsp;&nbsp; Authenticate With Google </button></form>
             </div>
         </div>
         
