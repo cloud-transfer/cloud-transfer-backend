@@ -18,6 +18,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="//cdn.muicss.com/mui-latest/css/mui.min.css" rel="stylesheet" type="text/css" />
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet" type="text/css" />
         <title>${title}</title>
         <jsp:invoke fragment="head_area"/>
@@ -31,7 +32,7 @@
             <div class="mui-divider"></div>
             <ul>
               <li>
-                <strong>Home</strong>
+                  <a href="/">Home</a>
 <!--                <ul>
                   <li><a href="#">Item 1</a></li>
                   <li><a href="#">Item 2</a></li>
@@ -39,10 +40,10 @@
                 </ul>-->
               </li>
               <li>
-                <strong>About</strong>
+                  <a href="#">About</a>
               </li>
               <li>
-                <strong>Dhaval Mehta</strong>
+                  <a href="#">Developers</a>
               </li>
             </ul>
           </div>

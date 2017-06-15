@@ -18,6 +18,13 @@ buttons {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
 }
 
+.mui-appbar
+{
+ background-color: #009688;
+ position: fixed;
+ width: 100%;
+}
+
 
 /**
  * Layout CSS
@@ -42,6 +49,9 @@ buttons {
   z-index: 2;
   background-color: #fff;
   transition: transform 0.2s;
+}
+#sidedrawer a{
+    color : black;
 }
 
 #content-wrapper {
@@ -144,19 +154,23 @@ buttons {
   padding-top: 15px;
 }
 
-#sidedrawer strong {
+#sidedrawer a {
   display: block;
   padding: 15px 22px;
   cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-#sidedrawer strong:hover {
+#sidedrawer a:hover {
   background-color: #E0E0E0;
+  text-decoration: none;
 }
 
+/*
 #sidedrawer strong + ul > li {
   padding: 6px 0px;
-}
+}*/
 
 
 /**
@@ -164,11 +178,27 @@ buttons {
  */
 
 #footer {
-  background-color: #0288D1;
+  background-color: #009688;
   color: #fff;
 }
 
 #footer a {
   color: #fff;
   text-decoration: underline;
+}
+
+.mui-btn--primary
+{
+    background-color: #4DB6AC;
+    color : white;
+}
+.mui-btn--primary:hover
+{
+    background-color: #4DB6AC;
+    color : white;
+}
+.mui-btn--primary:focus
+{
+    background-color: #4DB6AC;
+    color : white;
 }
