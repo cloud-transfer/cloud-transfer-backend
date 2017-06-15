@@ -218,6 +218,7 @@ buttons {
 .image-hover-image 
 {
  display: block;
+ margin: 0 auto;
 }
 .image-hover-image img
 {
@@ -253,7 +254,7 @@ buttons {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid #848484;
   margin: 0 auto;
-  padding: 25% 8px 5px 8px;
+  padding: 65% 8px 5px 8px;
   overflow: hidden;
   font-size: 17px;
   color: white;
