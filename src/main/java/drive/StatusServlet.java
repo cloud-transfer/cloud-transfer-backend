@@ -21,7 +21,7 @@ import model.Status;
  */
 @WebServlet(name = "StatusServlet", urlPatterns =
 {
-    "/StatusServlet"
+    "/drive/status"
 })
 public class StatusServlet extends HttpServlet
 {

@@ -5,8 +5,11 @@
  */
 package drive;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import javax.servlet.ServletException;
@@ -24,9 +27,9 @@ import org.apache.http.client.HttpResponseException;
  */
 @WebServlet(name = "TestingServlet", urlPatterns =
 {
-    "/TestingServlet"
+    "/drive/submit_upload_url"
 })
-public class TestingServlet extends HttpServlet
+public class UploadRequestHandlerServlet extends HttpServlet
 {
 
     /**
@@ -40,7 +43,7 @@ public class TestingServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException
     {
-	response.setContentType("text/html;charset=UTF-8");
+	response.setContentType("application/json;charset=UTF-8");
 	try (PrintWriter out = response.getWriter())
 	{
 	    GoogleApiTokenInfo tokenInfo = (GoogleApiTokenInfo) request.getSession().getAttribute("token");
@@ -52,8 +55,22 @@ public class TestingServlet extends HttpServlet
 	    }
 
 	    String errorMessage = null;
-	    URL url = new URL(request.getParameter("url"));
-	    String fileName = request.getParameter("filename");
+	    URL url;
+	    String fileName;
+
+	    try
+	    {
+
+		String urlString = request.getParameter("url");
+		url = new URL(urlString);
+		System.err.println("url is valid");
+		fileName = request.getParameter("filename");
+	    }
+	    catch (MalformedURLException e)
+	    {
+		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "URL is invalid.");
+		return;
+	    }
 
 	    DriveUploader uploader;
 
@@ -85,10 +102,16 @@ public class TestingServlet extends HttpServlet
 
 	    String id = UploadManager.getUploadManager().add(uploader);
 
+	    ObjectMapper mapper = new ObjectMapper();
+	    ObjectNode rootNode = mapper.createObjectNode();
+
 	    if (errorMessage != null)
-		out.print(errorMessage);
+		rootNode.put("error", errorMessage);
 	    else
-		out.print("Successfully Submitted! id = " + id);
+		rootNode.put("id", id);
+
+	    out.print(rootNode.toString());
+	    response.setStatus(HttpServletResponse.SC_ACCEPTED);
 	}
     }
 

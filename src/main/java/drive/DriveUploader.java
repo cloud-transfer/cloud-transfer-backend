@@ -8,11 +8,14 @@ package drive;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,18 +25,8 @@ import model.Status;
 import model.SuccessStatus;
 import oauth2.OAuthUtility;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.NoHttpResponseException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.impl.EnglishReasonPhraseCatalog;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicHeader;
 
 /**
  *
@@ -47,15 +40,35 @@ public class DriveUploader
     private String contentType;
     private String fileName;
     private GoogleApiTokenInfo tokenInfo;
-    private static final String POST_URL = "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable";
-    private String PUT_URL;
-    private long uploadedBytes = 0;
-    private final long chunkSize = 10 * 4 * 256 * 1024; // 100 MB
+    private static final URL POST_URL;
+    private URL PUT_URL;
+    private long uploadedBytes;
+    private final int chunkSize;
     private String errorMessage;
     private String status = "waiting";
+    private final Logger LOGGER;
+
+    static
+    {
+	try
+	{
+	    POST_URL = new URL("https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable");
+	}
+	catch (MalformedURLException ex)
+	{
+	    throw new ExceptionInInitializerError(ex);
+	}
+    }
+
+    private DriveUploader()
+    {
+	chunkSize = 10 * 4 * 256 * 1024; // 10 MB
+	LOGGER = Logger.getLogger(DriveUploader.class.getName());
+    }
 
     public DriveUploader(URL downloadUrl, GoogleApiTokenInfo tokenInfo)
     {
+	this();
 	this.downloadUrl = downloadUrl;
 	this.tokenInfo = tokenInfo;
     }
@@ -66,13 +79,10 @@ public class DriveUploader
 	this.fileName = fileName;
     }
 
-    public void init() throws NoHttpResponseException, UnknownHostException, HttpResponseException, IOException
+    public void init() throws IOException
     {
 	fetchFileMetadata();
 	obtainUploadUrl();
-
-	System.err.println("After init");
-	System.err.println(this);
     }
 
     public void upload()
@@ -84,8 +94,6 @@ public class DriveUploader
 
 	    while (uploadedBytes < contentLength)
 	    {
-		System.err.println("Uploaded: " + uploadedBytes);
-
 		long end = uploadedBytes + chunkSize - 1;
 
 		if (end >= contentLength)
@@ -99,8 +107,7 @@ public class DriveUploader
 	catch (Exception ex)
 	{
 	    errorMessage = ex.toString();
-	    System.err.println("error message: " + errorMessage);
-	    Logger.getLogger(DriveUploader.class.getName()).log(Level.SEVERE, null, ex);
+	    LOGGER.log(Level.SEVERE, null, ex);
 	}
     }
 
@@ -109,36 +116,34 @@ public class DriveUploader
 	if (fileName == null)
 	    fileName = FilenameUtils.getName(downloadUrl.getPath());
 
-	HttpClient httpClient = HttpClientBuilder.create().build();
-	HttpHead httpHead = new HttpHead(downloadUrl.toString());
-
-	HttpResponse response;
 	String method = "head";
+	HttpURLConnection connection = (HttpURLConnection) downloadUrl.openConnection();
 
 	try
 	{
-	    response = httpClient.execute(httpHead);
+	    connection.setRequestMethod("HEAD");
+	    connection.getResponseCode();
 	}
-	catch (NoHttpResponseException e)
+	catch (IOException e)
 	{
 	    method = "get";
-	    HttpGet httpGet = new HttpGet(downloadUrl.toString());
-	    httpGet.addHeader("Range", "bytes=0-0");
-	    response = httpClient.execute(httpGet);
+	    connection = (HttpURLConnection) downloadUrl.openConnection();
+	    connection.setRequestMethod("GET");
+	    connection.setRequestProperty("Range", "bytes=0-0");
 	}
 
-	int statusCode = response.getStatusLine().getStatusCode();
+	int statusCode = connection.getResponseCode();
 
 	if (OAuthUtility.isHttpSuccessStatusCode(statusCode))
 	{
 	    if (method.equals("head"))
-		contentLength = Long.parseLong(response.getFirstHeader("Content-Length").getValue());
+		contentLength = connection.getContentLengthLong();
 	    else
 	    {
-		String contentRange = response.getFirstHeader("Content-Range").getValue();
+		String contentRange = connection.getHeaderField("Content-Range");
 		contentLength = Long.parseLong(contentRange.substring(contentRange.lastIndexOf('/') + 1));
 	    }
-	    contentType = response.getFirstHeader("Content-Type").getValue();
+	    contentType = connection.getContentType();
 	}
 	else
 	    throw new HttpResponseException(statusCode, EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode, Locale.US));
@@ -146,24 +151,34 @@ public class DriveUploader
 
     private int uploadPartially(long start, long end) throws IOException
     {
-	HttpClient httpClient = HttpClientBuilder.create().build();
-	HttpGet httpGet = new HttpGet(downloadUrl.toString());
+	HttpURLConnection downloadConnection = (HttpURLConnection) downloadUrl.openConnection();
+	downloadConnection.setRequestMethod("GET");
 
 	String rangeHeaderValue = "bytes=" + start + "-" + end;
-	httpGet.setHeader("Range", rangeHeaderValue);
+	downloadConnection.setRequestProperty("Range", rangeHeaderValue);
 
-	HttpResponse response = httpClient.execute(httpGet);
-	Header contentTypeHeader = response.getFirstHeader("Content-Range");
+	String contentTypeString = downloadConnection.getHeaderField("Content-Range");
 
-	if (contentTypeHeader == null)
-	    contentTypeHeader = new BasicHeader("Content-Range", "bytes	" + start + "-" + end + "/" + contentLength);
+	if (contentTypeString == null)
+	    contentTypeString = "bytes " + start + "-" + end + "/" + contentLength;
 
-	HttpPost httpPost = new HttpPost(PUT_URL);
-	httpPost.addHeader(contentTypeHeader);
-	httpPost.setEntity(response.getEntity());
+	HttpURLConnection uploadConnection = (HttpURLConnection) PUT_URL.openConnection();
+	uploadConnection.setRequestProperty("Content-Range", contentTypeString);
+	uploadConnection.setDoOutput(true);
 
-	HttpResponse postResponse = httpClient.execute(httpPost);
-	int statusCode = postResponse.getStatusLine().getStatusCode();
+	BufferedInputStream bis;
+	try (BufferedOutputStream bos = new BufferedOutputStream(uploadConnection.getOutputStream()))
+	{
+	    bis = new BufferedInputStream(downloadConnection.getInputStream());
+	    byte[] buffer = new byte[chunkSize];
+	    int readBytesCount;
+	    while ((readBytesCount = bis.read(buffer)) != -1)
+		bos.write(buffer, 0, readBytesCount);
+	    bos.flush();
+	}
+	bis.close();
+
+	int statusCode = uploadConnection.getResponseCode();
 
 	if (statusCode < 400)
 	{
@@ -172,38 +187,40 @@ public class DriveUploader
 	}
 	else
 	{
-	    BufferedInputStream bis = new BufferedInputStream(postResponse.getEntity().getContent());
-	    byte arr[] = new byte[1024];
+	    BufferedReader br = new BufferedReader(new InputStreamReader(uploadConnection.getInputStream()));
 
-	    while (bis.read(arr) != -1)
-	    {
-		System.err.write(arr);
-	    }
+	    String line;
+
+	    while ((line = br.readLine()) != null)
+		System.err.println(line);
+
 	    throw new HttpResponseException(statusCode, EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode, Locale.US));
 	}
     }
 
     private void obtainUploadUrl() throws IOException
     {
-	HttpClient httpClient = HttpClientBuilder.create().build();
-	HttpPost httpPost = new HttpPost(POST_URL);
+	HttpURLConnection connection = (HttpURLConnection) POST_URL.openConnection();
+	connection.setRequestMethod("POST");
 
 	ObjectMapper mapper = new ObjectMapper();
 	ObjectNode node = mapper.createObjectNode();
 	node.put("name", fileName);
 	String postBody = node.toString();
 
-	BasicHttpEntity entity = new BasicHttpEntity();
-	entity.setContent(new ByteArrayInputStream(postBody.getBytes(StandardCharsets.UTF_8)));
-	httpPost.setEntity(entity);
+	connection.setDoOutput(true);
+	connection.setRequestProperty("Content-Type", "application/json");
+	connection.setRequestProperty("Authorization", tokenInfo.getTokenType() + " " + tokenInfo.getAccessToken());
+	connection.setRequestProperty("X-Upload-Content-Type", contentType);
+	connection.setRequestProperty("X-Upload-Content-Length", String.valueOf(contentLength));
 
-	httpPost.addHeader("Content-Type", "application/json");
-	httpPost.addHeader("Authorization", tokenInfo.getTokenType() + " " + tokenInfo.getAccessToken());
-	httpPost.addHeader("X-Upload-Content-Type", contentType);
-	httpPost.addHeader("X-Upload-Content-Length", contentType);
+	try (PrintWriter writer = new PrintWriter(connection.getOutputStream()))
+	{
+	    writer.print(postBody);
+	    writer.flush();
+	}
 
-	HttpResponse response = httpClient.execute(httpPost);
-	PUT_URL = response.getFirstHeader("Location").getValue();
+	PUT_URL = new URL(connection.getHeaderField("Location"));
     }
 
     @Override
