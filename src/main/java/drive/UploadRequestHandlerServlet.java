@@ -68,6 +68,7 @@ public class UploadRequestHandlerServlet extends HttpServlet
 	    }
 	    catch (MalformedURLException e)
 	    {
+		e.printStackTrace();
 		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "URL is invalid.");
 		return;
 	    }
