@@ -11,6 +11,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -48,6 +49,7 @@ public class DriveUploader
     private String errorMessage;
     private String status = "waiting";
     private static final Logger LOGGER;
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";
 
     static
     {
@@ -113,6 +115,7 @@ public class DriveUploader
 
 	String method = "head";
 	HttpURLConnection connection = (HttpURLConnection) downloadUrl.openConnection();
+	connection.setRequestProperty("User-Agent", USER_AGENT);
 
 	try
 	{
@@ -123,6 +126,7 @@ public class DriveUploader
 	{
 	    method = "get";
 	    connection = (HttpURLConnection) downloadUrl.openConnection();
+	    connection.setRequestProperty("User-Agent", USER_AGENT);
 	    connection.setRequestMethod("GET");
 	    connection.setRequestProperty("Range", "bytes=0-0");
 	}
@@ -141,7 +145,10 @@ public class DriveUploader
 	    contentType = connection.getContentType();
 	}
 	else
+	{
+	    logHttpError(connection.getInputStream());
 	    throw new HttpResponseException(statusCode, EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode, Locale.US));
+	}
     }
 
     private int uploadPartially(long start, long end) throws IOException
@@ -151,7 +158,7 @@ public class DriveUploader
 
 	String rangeHeaderValue = "bytes=" + start + "-" + end;
 	downloadConnection.setRequestProperty("Range", rangeHeaderValue);
-
+	downloadConnection.setRequestProperty("User-Agent", USER_AGENT);
 	String contentTypeString = downloadConnection.getHeaderField("Content-Range");
 
 	if (contentTypeString == null)
@@ -160,7 +167,7 @@ public class DriveUploader
 	HttpURLConnection uploadConnection = (HttpURLConnection) PUT_URL.openConnection();
 	uploadConnection.setRequestProperty("Content-Range", contentTypeString);
 	uploadConnection.setDoOutput(true);
-
+	uploadConnection.setRequestProperty("User-Agent", USER_AGENT);
 	BufferedInputStream bis;
 	try (BufferedOutputStream bos = new BufferedOutputStream(uploadConnection.getOutputStream()))
 	{
@@ -182,21 +189,17 @@ public class DriveUploader
 	}
 	else
 	{
-	    BufferedReader br = new BufferedReader(new InputStreamReader(uploadConnection.getInputStream()));
-
-	    String line;
-
-	    while ((line = br.readLine()) != null)
-		System.err.println(line);
-
+	    logHttpError(uploadConnection.getInputStream());
 	    throw new HttpResponseException(statusCode, EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode, Locale.US));
 	}
+
     }
 
     private void obtainUploadUrl() throws IOException
     {
 	HttpURLConnection connection = (HttpURLConnection) POST_URL.openConnection();
 	connection.setRequestMethod("POST");
+	connection.setRequestProperty("User-Agent", USER_AGENT);
 
 	ObjectMapper mapper = new ObjectMapper();
 	ObjectNode node = mapper.createObjectNode();
@@ -236,5 +239,19 @@ public class DriveUploader
 	successStatus.setCompletePercentage(percentageComplete);
 	successStatus.setProcessingStatus(status);
 	return successStatus;
+    }
+
+    private void logHttpError(InputStream inputStream) throws IOException
+    {
+	BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+	String line;
+	StringBuilder sb = new StringBuilder();
+
+	while ((line = br.readLine()) != null)
+	    sb.append(line);
+
+	LOGGER.log(Level.SEVERE, sb.toString());
+
     }
 }
