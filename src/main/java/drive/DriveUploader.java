@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,15 +44,16 @@ public class DriveUploader
     private static final URL POST_URL;
     private URL PUT_URL;
     private long uploadedBytes;
-    private final int chunkSize;
+    private final int chunkSize = 10 * 4 * 256 * 1024; // 10 MB
     private String errorMessage;
     private String status = "waiting";
-    private final Logger LOGGER;
+    private static final Logger LOGGER;
 
     static
     {
 	try
 	{
+	    LOGGER = Logger.getLogger(DriveUploader.class.getName());
 	    POST_URL = new URL("https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable");
 	}
 	catch (MalformedURLException ex)
@@ -60,15 +62,8 @@ public class DriveUploader
 	}
     }
 
-    private DriveUploader()
-    {
-	chunkSize = 10 * 4 * 256 * 1024; // 10 MB
-	LOGGER = Logger.getLogger(DriveUploader.class.getName());
-    }
-
     public DriveUploader(URL downloadUrl, GoogleApiTokenInfo tokenInfo)
     {
-	this();
 	this.downloadUrl = downloadUrl;
 	this.tokenInfo = tokenInfo;
     }
@@ -79,7 +74,7 @@ public class DriveUploader
 	this.fileName = fileName;
     }
 
-    public void init() throws IOException
+    public void init() throws UnknownHostException, HttpResponseException, IOException
     {
 	fetchFileMetadata();
 	obtainUploadUrl();
@@ -104,7 +99,7 @@ public class DriveUploader
 
 	    status = "Upload Complete";
 	}
-	catch (Exception ex)
+	catch (IOException ex)
 	{
 	    errorMessage = ex.toString();
 	    LOGGER.log(Level.SEVERE, null, ex);
