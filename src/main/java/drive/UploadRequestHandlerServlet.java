@@ -60,8 +60,9 @@ public class UploadRequestHandlerServlet extends HttpServlet
 
 	    try
 	    {
-
 		String urlString = request.getParameter("url");
+		urlString = urlString.replaceAll(" ", "%20");
+		System.err.println(urlString);
 		url = new URL(urlString);
 		System.err.println("url is valid");
 		fileName = request.getParameter("filename");
@@ -98,6 +99,7 @@ public class UploadRequestHandlerServlet extends HttpServlet
 	    }
 	    catch (IOException ex)
 	    {
+		log(getServletName(), ex);
 		errorMessage = "ErrorMessage: " + ex.getLocalizedMessage();
 	    }
 
