@@ -7,6 +7,7 @@ package drive;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.GoogleApiTokenInfo;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.HttpResponseException;
 
@@ -60,16 +62,21 @@ public class UploadRequestHandlerServlet extends HttpServlet
 
 	    try
 	    {
-		String urlString = request.getParameter("url");
-		urlString = urlString.replaceAll(" ", "%20");
-		System.err.println(urlString);
-		url = new URL(urlString);
-		System.err.println("url is valid");
 		fileName = request.getParameter("filename");
+		String urlString = request.getParameter("url");
+
+		if (fileName == null)
+		{
+		    url = new URL(urlString);
+		    fileName = FilenameUtils.getName(url.getPath());
+		}
+
+		urlString = urlString.replaceAll(" ", "%20");
+		url = new URL(urlString);
 	    }
 	    catch (MalformedURLException e)
 	    {
-		e.printStackTrace();
+		log(getServletInfo(), e);
 		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "URL is invalid.");
 		return;
 	    }
@@ -84,6 +91,10 @@ public class UploadRequestHandlerServlet extends HttpServlet
 	    try
 	    {
 		uploader.init();
+	    }
+	    catch (FileNotFoundException ex)
+	    {
+		errorMessage = "404 Not found";
 	    }
 	    catch (NoHttpResponseException ex)
 	    {

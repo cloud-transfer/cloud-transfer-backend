@@ -146,7 +146,7 @@ public class DriveUploader
 	}
 	else
 	{
-	    logHttpError(connection.getInputStream());
+	    logHttpError(connection.getErrorStream());
 	    throw new HttpResponseException(statusCode, EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode, Locale.US));
 	}
     }

@@ -6,6 +6,31 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          metadata-complete="false">
 
+<<<<<<< HEAD
 
+=======
+       <display-name>Save2Drive Application</display-name>
+        <description>
+            This is a simple web application which helps users to
+            upload files directly from a URL to Google Drive
+        </description>  
+        
+        <servlet>
+            <servlet-name>about</servlet-name>
+            <jsp-file>/about.jsp</jsp-file>
+        </servlet>
+        <servlet>
+            <servlet-name>developers</servlet-name>
+            <jsp-file>/developers.jsp</jsp-file>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>about</servlet-name>
+            <url-pattern>/about</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>developers</servlet-name>
+            <url-pattern>/developers</url-pattern>
+        </servlet-mapping>
+>>>>>>> ed3efba4ad345ffe8735021ac07aa917522d4b9a
 </web-app>
 
