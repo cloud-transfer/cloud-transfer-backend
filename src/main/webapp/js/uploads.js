@@ -29,10 +29,11 @@ $.ajax({
                 '</div>' +
               '</div>' + 
             '</div>' +
-          '</section>'
+          '</section>';
 		  
 			
-			$('#content-inner .main-footer').before(upload);
+			$('.push').before(upload);
+                        $(window).resize();
 		});
 	},
     error: function(e) {
