@@ -5,10 +5,10 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib prefix="ui" tagdir="/WEB-INF/tags" %>
 
-<t:ui_layout title="Save2Drive - Home">
+<ui:templete title="Save2Drive - Home">
 
     <jsp:attribute name="head_area">
 
@@ -25,9 +25,12 @@
 
         <ul class="breadcrumb">
             <div class="container-fluid">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item active">Your Uploads</li>
+                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+                <li class="breadcrumb-item active">Your Uploads</li>
             </div>
         </ul>
     </jsp:attribute>
-</t:ui_layout>
+    <jsp:attribute name="javascript">
+        <script src="/resources/js/uploads.js"></script>
+    </jsp:attribute>
+</ui:templete>
