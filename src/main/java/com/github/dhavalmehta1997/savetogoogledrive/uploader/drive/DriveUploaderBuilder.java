@@ -7,8 +7,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +19,7 @@ import static com.github.dhavalmehta1997.savetogoogledrive.utility.HttpUtilities
 public class DriveUploaderBuilder {
 
     private static final Pattern CONTENT_DISPOSITION_PATTERN =
-            Pattern.compile("attachment;\\s*filename\\s*=\\s*\"([^\"]*)\"");
+            Pattern.compile("(?i)filename[^;\\n=]*=(['\\\"])*(?:utf-8\\'\\')?(.*)");
 
     private User user;
     private DownloadFileInfo downloadFileInfo;
@@ -82,9 +84,9 @@ public class DriveUploaderBuilder {
         try {
             Matcher matcher = CONTENT_DISPOSITION_PATTERN.matcher(contentDisposition);
             if (matcher.find()) {
-                String match = matcher.group(1);
+                String match = matcher.group(2);
                 if (match != null && !match.equals("")) {
-                    System.err.println("from matcher filename: " + match);
+                    match = URLDecoder.decode(match, "UTF-8");
                     return match;
                 }
             }
@@ -92,6 +94,8 @@ public class DriveUploaderBuilder {
         } catch (IllegalStateException ex) {
             // cannot find filename using content disposition http header.
             // Use url to find filename;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         return FilenameUtils.getName(downloadFileInfo.getUploadUrl().getPath());
