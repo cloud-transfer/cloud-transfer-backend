@@ -81,23 +81,25 @@ public class DriveUploaderBuilder {
     }
 
     private String findFileName(String contentDisposition) {
-        try {
-            Matcher matcher = CONTENT_DISPOSITION_PATTERN.matcher(contentDisposition);
-            if (matcher.find()) {
-                String match = matcher.group(2);
-                if (match != null && !match.equals("")) {
-                    match = URLDecoder.decode(match, "UTF-8");
-                    return match;
+
+        if (contentDisposition != null) {
+            try {
+                Matcher matcher = CONTENT_DISPOSITION_PATTERN.matcher(contentDisposition);
+                if (matcher.find()) {
+                    String match = matcher.group(2);
+                    if (match != null && !match.equals("")) {
+                        match = URLDecoder.decode(match, "UTF-8");
+                        return match;
+                    }
                 }
+
+            } catch (IllegalStateException ex) {
+                // cannot find filename using content disposition http header.
+                // Use url to find filename;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-
-        } catch (IllegalStateException ex) {
-            // cannot find filename using content disposition http header.
-            // Use url to find filename;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
-
         return FilenameUtils.getName(downloadFileInfo.getUploadUrl().getPath());
     }
 
