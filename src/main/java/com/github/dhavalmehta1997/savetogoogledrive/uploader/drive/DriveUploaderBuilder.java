@@ -72,22 +72,29 @@ public class DriveUploaderBuilder {
         else
             downloadFileInfo.setResumeSupported(checkResumeSupportUsingGetMethod());
 
-        if (downloadFileInfo.getFileName() == null) {
+        if (downloadFileInfo.getFileName() == null || downloadFileInfo.getFileName().equals("")) {
             String contentDisposition = connection.getHeaderField("Content-Disposition");
+            downloadFileInfo.setFileName(findFileName(contentDisposition));
+        }
+    }
 
-            if (contentDisposition == null)
-                downloadFileInfo.setFileName(FilenameUtils.getName(downloadFileInfo.getUploadUrl().getPath()));
-            else {
-                try {
-                    Matcher matcher = CONTENT_DISPOSITION_PATTERN.matcher(contentDisposition);
-                    if (matcher.find()) {
-                        downloadFileInfo.setFileName(matcher.group(1));
-                    }
-                } catch (IllegalStateException ex) {
-                    downloadFileInfo.setFileName(FilenameUtils.getName(downloadFileInfo.getUploadUrl().getPath()));
+    private String findFileName(String contentDisposition) {
+        try {
+            Matcher matcher = CONTENT_DISPOSITION_PATTERN.matcher(contentDisposition);
+            if (matcher.find()) {
+                String match = matcher.group(1);
+                if (match != null && !match.equals("")) {
+                    System.err.println("from matcher filename: " + match);
+                    return match;
                 }
             }
+
+        } catch (IllegalStateException ex) {
+            // cannot find filename using content disposition http header.
+            // Use url to find filename;
         }
+
+        return FilenameUtils.getName(downloadFileInfo.getUploadUrl().getPath());
     }
 
     private boolean checkResumeSupportUsingGetMethod() throws IOException {
