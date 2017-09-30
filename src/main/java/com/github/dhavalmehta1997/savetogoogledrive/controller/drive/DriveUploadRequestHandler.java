@@ -30,7 +30,7 @@ public class DriveUploadRequestHandler extends BaseController {
     }
 
     @RequestMapping("/drive/upload")
-    public ResponseEntity handleUploadRequest(@RequestParam("url") URL url, @RequestParam(value = "filename", required = false) String filename) {
+    public ResponseEntity<String> handleUploadRequest(@RequestParam("url") URL url, @RequestParam(value = "filename", required = false) String filename) {
         User user = (User) session.getAttribute("user");
         try {
             Uploader uploader = new DriveUploaderBuilder()
@@ -41,12 +41,14 @@ public class DriveUploadRequestHandler extends BaseController {
 
             UploadTask uploadTask = new UploadTask(uploader);
             UploadManager.getUploadManager().add(uploadTask);
-            List<String> uplaods = (List<String>) session.getAttribute("uploads");
-            uplaods.add(uploadTask.getId());
-            return new ResponseEntity(uploadTask.getId(), HttpStatus.OK);
+            List<String> uploads = (List<String>) session.getAttribute("uploads");
+            uploads.add(uploadTask.getId());
+            return new ResponseEntity<>(uploadTask.getId(), HttpStatus.OK);
 
+        } catch (java.net.UnknownHostException ex) {
+            throw new HttpResponseException(HttpStatus.BAD_REQUEST, url.getHost() + ": website not found. ", ex);
         } catch (IOException ex) {
-            throw new HttpResponseException(400, ex);
+            throw new HttpResponseException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }
     }
 }
