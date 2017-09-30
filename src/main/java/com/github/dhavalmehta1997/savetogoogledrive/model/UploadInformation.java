@@ -7,6 +7,7 @@ public class UploadInformation {
     private long totalSize;
     private long uploadedSize;
     private Throwable error;
+    private String errorMessage;
     private UploadStatus uploadStatus;
     private double speed;
 
@@ -65,4 +66,13 @@ public class UploadInformation {
     public void setSpeed(double speed) {
         this.speed = speed;
     }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
 }
