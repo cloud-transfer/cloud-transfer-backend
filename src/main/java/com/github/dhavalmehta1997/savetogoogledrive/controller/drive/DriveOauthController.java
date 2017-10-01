@@ -17,6 +17,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -103,7 +104,7 @@ public class DriveOauthController extends BaseController {
             return gson.fromJson(new InputStreamReader(inputStream), Token.class);
         }
 
-        throw new HttpResponseException(statusCode);
+        throw new HttpResponseException(HttpStatus.valueOf(statusCode));
     }
 
     private User getUser(@NotNull Token token) throws IOException, URISyntaxException {
@@ -123,6 +124,6 @@ public class DriveOauthController extends BaseController {
             return user;
         }
 
-        throw new HttpResponseException(statusCode);
+        throw new HttpResponseException(HttpStatus.valueOf(statusCode));
     }
 }
