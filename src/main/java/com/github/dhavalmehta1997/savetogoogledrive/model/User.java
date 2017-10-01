@@ -40,10 +40,6 @@ public class User {
     private Token token;
     private long tokenUpdatedAt;
 
-    public User() {
-        tokenUpdatedAt = Instant.EPOCH.getEpochSecond();
-    }
-
     public String getName() {
         return name;
     }
@@ -90,7 +86,7 @@ public class User {
     }
 
     public synchronized void refreshTokenIfNecessary() {
-        long elapsedTime = Instant.EPOCH.getEpochSecond() - tokenUpdatedAt;
+        long elapsedTime = Instant.EPOCH.getEpochSecond() - token.getTokenUpdatedAt();
 
         if (token.getExpiresIn() - elapsedTime < 100)
             refreshToken();
@@ -121,8 +117,6 @@ public class User {
                 token.setRefreshToken(refreshToken);
                 tokenUpdatedAt = Instant.EPOCH.getEpochSecond();
             }
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }

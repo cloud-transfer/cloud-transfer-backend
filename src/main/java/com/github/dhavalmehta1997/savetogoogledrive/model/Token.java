@@ -5,6 +5,8 @@
  */
 package com.github.dhavalmehta1997.savetogoogledrive.model;
 
+import java.time.Instant;
+
 /**
  * @author Dhaval
  */
@@ -16,6 +18,10 @@ public class Token {
     private String refreshToken;
     private String idToken;
     private long tokenUpdatedAt;
+
+    public Token() {
+        tokenUpdatedAt = Instant.EPOCH.getEpochSecond();
+    }
 
     public String getAccessToken() {
         return accessToken;
