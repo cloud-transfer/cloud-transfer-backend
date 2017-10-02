@@ -1,7 +1,7 @@
 package com.github.dhavalmehta1997.savetogoogledrive.controller.drive;
 
 import com.github.dhavalmehta1997.savetogoogledrive.controller.BaseController;
-import com.github.dhavalmehta1997.savetogoogledrive.exception.HttpResponseException;
+import com.github.dhavalmehta1997.savetogoogledrive.exception.ApiException;
 import com.github.dhavalmehta1997.savetogoogledrive.model.Token;
 import com.github.dhavalmehta1997.savetogoogledrive.model.User;
 import com.github.dhavalmehta1997.savetogoogledrive.utility.HttpUtilities;
@@ -104,7 +104,7 @@ public class DriveOauthController extends BaseController {
             return gson.fromJson(new InputStreamReader(inputStream), Token.class);
         }
 
-        throw new HttpResponseException(HttpStatus.valueOf(statusCode));
+        throw new ApiException(HttpStatus.valueOf(statusCode));
     }
 
     private User getUser(@NotNull Token token) throws IOException, URISyntaxException {
@@ -124,6 +124,6 @@ public class DriveOauthController extends BaseController {
             return user;
         }
 
-        throw new HttpResponseException(HttpStatus.valueOf(statusCode));
+        throw new ApiException(HttpStatus.valueOf(statusCode));
     }
 }

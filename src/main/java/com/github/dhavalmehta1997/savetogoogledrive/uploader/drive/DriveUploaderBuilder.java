@@ -1,5 +1,6 @@
 package com.github.dhavalmehta1997.savetogoogledrive.uploader.drive;
 
+import com.github.dhavalmehta1997.savetogoogledrive.exception.ApiException;
 import com.github.dhavalmehta1997.savetogoogledrive.model.DownloadFileInfo;
 import com.github.dhavalmehta1997.savetogoogledrive.model.User;
 import com.github.dhavalmehta1997.savetogoogledrive.utility.HttpUtilities;
@@ -48,10 +49,10 @@ public class DriveUploaderBuilder {
         assert downloadFileInfo.getUploadUrl() != null;
         fetchFileInformation();
 
-        if (downloadFileInfo.isResumeSupported())
-            return new ResumableDriveUploader(downloadFileInfo, user);
-        else
-            return new NonResumableDriveUploader(downloadFileInfo, user);
+//        if (downloadFileInfo.isResumeSupported())
+//            return new ResumableDriveUploader(downloadFileInfo, user);
+//        else
+        return new NonResumableDriveUploader(downloadFileInfo, user);
     }
 
     private void fetchFileInformation() throws IOException {
@@ -59,10 +60,22 @@ public class DriveUploaderBuilder {
         HttpURLConnection connection = (HttpURLConnection) downloadFileInfo.getUploadUrl().openConnection();
         connection.setRequestProperty("User-Agent", USER_AGENT);
         connection.setRequestMethod("HEAD");
+
+        connection.connect();
+
         int statusCode = connection.getResponseCode();
 
-        if (!HttpUtilities.success(statusCode))
-            return;
+        if (!HttpUtilities.success(statusCode)) {
+            throw new ApiException(HttpStatus.UNPROCESSABLE_ENTITY, "Server can not download file");
+        }
+
+        String mimeType = connection.getContentType().toLowerCase();
+
+        if (mimeType.contains("application/xml") ||
+                mimeType.contains("text/xml") ||
+                mimeType.contains("application/json") ||
+                mimeType.contains("text/html"))
+            throw new ApiException(HttpStatus.UNPROCESSABLE_ENTITY, "Given URL does not point to a file.");
 
         downloadFileInfo.setContentLength(connection.getContentLengthLong());
         downloadFileInfo.setContentType(connection.getContentType());
