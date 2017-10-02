@@ -49,10 +49,10 @@ public class DriveUploaderBuilder {
         assert downloadFileInfo.getUploadUrl() != null;
         fetchFileInformation();
 
-//        if (downloadFileInfo.isResumeSupported())
-//            return new ResumableDriveUploader(downloadFileInfo, user);
-//        else
-        return new NonResumableDriveUploader(downloadFileInfo, user);
+        if (downloadFileInfo.isResumeSupported())
+            return new ResumableDriveUploader(downloadFileInfo, user);
+        else
+            return new NonResumableDriveUploader(downloadFileInfo, user);
     }
 
     private void fetchFileInformation() throws IOException {

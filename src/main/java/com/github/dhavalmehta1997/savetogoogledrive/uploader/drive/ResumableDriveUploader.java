@@ -3,6 +3,7 @@ package com.github.dhavalmehta1997.savetogoogledrive.uploader.drive;
 import com.github.dhavalmehta1997.savetogoogledrive.model.DownloadFileInfo;
 import com.github.dhavalmehta1997.savetogoogledrive.model.UploadStatus;
 import com.github.dhavalmehta1997.savetogoogledrive.model.User;
+import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +26,7 @@ public class ResumableDriveUploader extends DriveUploader {
         downloadConnection.setRequestProperty("Range", rangeHeaderValue);
         downloadConnection.setRequestProperty("User-Agent", USER_AGENT);
         InputStream in = downloadConnection.getInputStream();
-        byte[] buffer = new byte[(int) (end - start + 1)];
-        in.read(buffer);
-        in.close();
-        return buffer;
+        return IOUtils.toByteArray(in);
     }
 
 
