@@ -43,4 +43,8 @@ public class UploadManager {
         idToTaskMap.put(uploadTask.getId(), uploadTask);
         executorService.execute(uploadTask);
     }
+
+    public void distroy() {
+        executorService.shutdown();
+    }
 }
