@@ -4,7 +4,7 @@ frm.submit(function (e) {
     e.preventDefault();
     var url = $("#url").val();
     var filename = $("#filename").val();
-    var dataString = 'url=' + url + '&filename=' + filename;
+    var dataString = 'url=' + encodeURIComponent(url) + '&filename=' + encodeURIComponent(filename);
     if (url == '') {
         alert("Please Enter Url");
     }
@@ -12,7 +12,7 @@ frm.submit(function (e) {
         $.ajax({
             type: frm.attr('method'),
             url: frm.attr('action'),
-            data: dataString,
+            data: frm.serialize(),
             cache: false,
             success: function () {
                 frm.trigger("reset");

@@ -32,12 +32,13 @@
                                   <form method="post" id="uploadform" action="api/drive/upload">
                                       <div class="form-group">
                                           <label class="form-control-label">URL</label>
-                                          <input type="url" id="url" placeholder="Enter File URL here"
+                                          <input type="url" id="url" name="url" placeholder="Enter File URL here"
                                                  class="form-control">
                                       </div>
                                       <div class="form-group">
                                           <label class="form-control-label">Filename</label>
-                                          <input type="text" id="filename" placeholder="Enter Filename here"
+                                          <input type="text" id="filename" name="filename"
+                                                 placeholder="Enter Filename here"
                                                  class="form-control">
                                           <span class="help-block-none">File name is optional.</span>
                                       </div>
