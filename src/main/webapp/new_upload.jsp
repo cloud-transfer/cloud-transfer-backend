@@ -29,21 +29,21 @@
                                   <h3 class="h4">Enter File Information</h3>
                               </div>
                               <div class="card-body">
-                                  <form method="post" action="api/drive/upload">
+                                  <form method="post" id="uploadform" action="api/drive/upload">
                                       <div class="form-group">
                                           <label class="form-control-label">URL</label>
-                                          <input type="url" name="url" placeholder="Enter File URL here"
+                                          <input type="url" id="url" placeholder="Enter File URL here"
                                                  class="form-control">
                                       </div>
                                       <div class="form-group">
                                           <label class="form-control-label">Filename</label>
-                                          <input type="text" name="filename" placeholder="Enter Filename here"
+                                          <input type="text" id="filename" placeholder="Enter Filename here"
                                                  class="form-control">
                                           <span class="help-block-none">File name is optional.</span>
                                       </div>
                                       <div class="form-group row">
                                           <div class="col-sm-12 offset-sm-5">
-                                              <button type="submit" class="btn btn-primary">Upload</button>
+                                              <button type="submit" id="submit" class="btn btn-primary">Upload</button>
                                           </div>
                                       </div>
                                   </form>
@@ -54,5 +54,8 @@
                   </div>
               </div>
           </section>
+    </jsp:attribute>
+    <jsp:attribute name="javascript">
+        <script src="/resources/js/submit_upload.js"></script>
     </jsp:attribute>
 </ui:templete>
