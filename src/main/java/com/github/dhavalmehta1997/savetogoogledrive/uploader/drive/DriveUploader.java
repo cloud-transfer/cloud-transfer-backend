@@ -1,6 +1,6 @@
 package com.github.dhavalmehta1997.savetogoogledrive.uploader.drive;
 
-import com.github.dhavalmehta1997.savetogoogledrive.exception.HttpResponseException;
+import com.github.dhavalmehta1997.savetogoogledrive.exception.ApiException;
 import com.github.dhavalmehta1997.savetogoogledrive.model.DownloadFileInfo;
 import com.github.dhavalmehta1997.savetogoogledrive.model.UploadInformation;
 import com.github.dhavalmehta1997.savetogoogledrive.model.UploadStatus;
@@ -8,7 +8,9 @@ import com.github.dhavalmehta1997.savetogoogledrive.model.User;
 import com.github.dhavalmehta1997.savetogoogledrive.uploader.Uploader;
 import com.github.dhavalmehta1997.savetogoogledrive.utility.HttpUtilities;
 import com.google.gson.JsonObject;
+import org.springframework.http.HttpStatus;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -56,7 +58,7 @@ abstract class DriveUploader implements Uploader {
     }
 
     private DriveUploader() {
-        chunkSize = 256 * 1024; // 256 KB
+        chunkSize = 1024 * 1024; // 1 MB
         uploadInformation = new UploadInformation();
         uploadInformation.setUploadStatus(UploadStatus.waiting);
     }
@@ -72,29 +74,27 @@ abstract class DriveUploader implements Uploader {
      * @param end   ending byte of range
      * @throws IOException
      */
-    void uploadPartially(byte[] buffer, long start, long end) throws IOException {
+    void uploadPartially(@NotNull byte[] buffer, long start, long end) throws IOException {
         HttpURLConnection uploadConnection = (HttpURLConnection) PUT_URL.openConnection();
         uploadConnection.setDoOutput(true);
         uploadConnection.setRequestProperty("User-Agent", USER_AGENT);
         String contentRange = "bytes " + start + "-" + end + "/" + downloadFileInfo.getContentLength();
         uploadConnection.setRequestProperty("Content-Range", contentRange);
         OutputStream out = uploadConnection.getOutputStream();
-        out.write(buffer);
+        out.write(buffer, 0, (int) (end - start + 1));
         out.close();
-
         int statusCode = uploadConnection.getResponseCode();
         // In case of successful upload, status code will be 3** or 2**
         if (statusCode < 400)
             uploadInformation.setUploadedSize(end + 1);
         else {
             String description = inputStreamToString(uploadConnection.getInputStream());
-            uploadInformation.setError(new HttpResponseException(statusCode, description, null));
+            uploadInformation.setError(new ApiException(HttpStatus.valueOf(statusCode), description, null));
         }
     }
 
     private void obtainUploadUrl() throws IOException {
         user.refreshTokenIfNecessary();
-
         HttpURLConnection connection = (HttpURLConnection) POST_URL.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("User-Agent", USER_AGENT);
@@ -112,13 +112,15 @@ abstract class DriveUploader implements Uploader {
             writer.print(postBody);
         }
 
+        connection.connect();
+
         int statusCode = connection.getResponseCode();
 
         if (HttpUtilities.success(statusCode))
             PUT_URL = new URL(connection.getHeaderField("Location"));
         else {
             String description = inputStreamToString(connection.getInputStream());
-            uploadInformation.setError(new HttpResponseException(statusCode, description, null));
+            uploadInformation.setError(new ApiException(HttpStatus.valueOf(statusCode), description, null));
         }
     }
 
