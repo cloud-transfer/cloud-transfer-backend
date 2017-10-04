@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.github.dhavalmehta1997.savetogoogledrive.controller")
+@ComponentScan(basePackages = "com.github.dhavalmehta1997.savetogoogledrive")
 public class WebApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
