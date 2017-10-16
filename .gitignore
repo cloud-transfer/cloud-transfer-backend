@@ -2,4 +2,7 @@ target
 savetodrive.iml
 .idea
 nb-configuration.xml
-/bin/
+.settings
+bin
+.classpath
+.project
