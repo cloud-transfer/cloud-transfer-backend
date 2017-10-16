@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-public class StatusRequestHandler extends BaseController {
+@RequestMapping("api/status")
+public class StatusRequestHandler {
 
     private final HttpSession session;
 
@@ -24,17 +26,17 @@ public class StatusRequestHandler extends BaseController {
         this.session = session;
     }
 
-    @GetMapping("/status/{id}")
-    public ResponseEntity handleStatusRequest(@PathVariable("id") String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<UploadInformation> getStatus(@PathVariable("id") String id) {
         UploadInformation uploadInformation = UploadManager.getUploadManager().getUploadInformation(id);
 
         if (uploadInformation == null)
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity(uploadInformation, HttpStatus.OK);
+        return new ResponseEntity<>(uploadInformation, HttpStatus.OK);
     }
 
-    @GetMapping("/status")
+    @GetMapping("/")
     public List<UploadInformation> handleStatusRequest() {
 
         List<String> uploads = (List<String>) session.getAttribute("uploads");

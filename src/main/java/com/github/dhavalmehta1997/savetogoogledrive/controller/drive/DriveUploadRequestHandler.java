@@ -1,6 +1,5 @@
 package com.github.dhavalmehta1997.savetogoogledrive.controller.drive;
 
-import com.github.dhavalmehta1997.savetogoogledrive.controller.BaseController;
 import com.github.dhavalmehta1997.savetogoogledrive.exception.ApiException;
 import com.github.dhavalmehta1997.savetogoogledrive.model.User;
 import com.github.dhavalmehta1997.savetogoogledrive.uploader.UploadManager;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,7 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-public class DriveUploadRequestHandler extends BaseController {
+@RequestMapping("api/drive")
+public class DriveUploadRequestHandler {
 
     private final HttpSession session;
 
@@ -37,7 +38,7 @@ public class DriveUploadRequestHandler extends BaseController {
         this.session = session;
     }
 
-    @PostMapping("/drive/upload")
+    @PostMapping("/upload")
     public ResponseEntity<String> handleUploadRequest(@RequestParam("url") String urlString, @RequestParam(value = "filename", required = false) String filename, HttpServletResponse response) {
         User user = (User) session.getAttribute("user");
         URL url;

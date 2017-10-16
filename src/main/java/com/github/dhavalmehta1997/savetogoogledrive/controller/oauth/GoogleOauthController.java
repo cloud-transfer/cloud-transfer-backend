@@ -1,6 +1,5 @@
-package com.github.dhavalmehta1997.savetogoogledrive.controller.drive;
+package com.github.dhavalmehta1997.savetogoogledrive.controller.oauth;
 
-import com.github.dhavalmehta1997.savetogoogledrive.controller.BaseController;
 import com.github.dhavalmehta1997.savetogoogledrive.exception.ApiException;
 import com.github.dhavalmehta1997.savetogoogledrive.model.Token;
 import com.github.dhavalmehta1997.savetogoogledrive.model.User;
@@ -19,6 +18,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
@@ -36,7 +36,8 @@ import java.util.List;
  * @author Dhaval
  */
 @RestController
-public class DriveOauthController extends BaseController {
+@RequestMapping("/api/google")
+public class GoogleOauthController {
 
     private final static String PROFILE_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
     private final static String TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token";
@@ -52,12 +53,12 @@ public class DriveOauthController extends BaseController {
     private final HttpSession session;
 
     @Autowired
-    public DriveOauthController(HttpSession session) {
+    public GoogleOauthController(HttpSession session) {
         this.session = session;
     }
 
-    @GetMapping(value = "oauth/google/redirect")
-    public RedirectView redirect() throws URISyntaxException {
+    @GetMapping(value = "/redirect")
+    public RedirectView redirectForOauth2() throws URISyntaxException {
         String redirectUrl = new URIBuilder(OAUTH_URL)
                 .addParameter("scope", SCOPE)
                 .addParameter("access_type", ACCESS_TYPE)
@@ -69,7 +70,7 @@ public class DriveOauthController extends BaseController {
         return new RedirectView(redirectUrl);
     }
 
-    @GetMapping("oauth/google/callback")
+    @GetMapping("/callback")
     public RedirectView handleCallback(@RequestParam("code") String code) throws IOException, URISyntaxException {
         Token token = getAccessToken(code);
         User user = getUser(token);

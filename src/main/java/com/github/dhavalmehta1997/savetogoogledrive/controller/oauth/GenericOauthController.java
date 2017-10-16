@@ -1,18 +1,20 @@
-package com.github.dhavalmehta1997.savetogoogledrive.controller;
+package com.github.dhavalmehta1997.savetogoogledrive.controller.oauth;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-public class GenericOauthController extends BaseController {
+@RequestMapping("api/oauth")
+public class GenericOauthController {
 
-    @GetMapping("/oauth/authorized")
+    @GetMapping("/authorized")
     public RedirectView redirectAfterSuccessfulAuthentication() {
         return new RedirectView("/index.jsp");
     }
 
-    @GetMapping("/oauth//unauthorized")
+    @GetMapping("/unauthorized")
     public RedirectView redirectAfterUnsuccessfulAuthentication() {
         return new RedirectView("/index.jsp");
     }
