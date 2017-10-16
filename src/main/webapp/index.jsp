@@ -20,7 +20,7 @@
                                 <p style="font-size: 20px; color: red">You are not authenticated. Please authenticate
                                     with Google. </p>
                                 <div>
-                                    <form action="api/oauth/google/redirect">
+                                    <form action="${pageContext.request.contextPath}/api/oauth/google/redirect">
                                         <button id="auth-btn" class="btn btn-primary"><i class="fa fa-google"
                                                                                          aria-hidden="true"></i>
                                             &nbsp;&nbsp; Authenticate With Google

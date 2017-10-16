@@ -24,13 +24,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
     <!-- Google fonts - Lato | Open Sans | Poppins | Roboto | Work Sans -->
     <link href="https://fonts.googleapis.com/css?family=Roboto|Lato|Open+Sans|Poppins|Work+Sans" rel="stylesheet">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="/resources/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.default.css" id="theme-stylesheet">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
     <!-- Font Awesome CDN-->
     <script src="https://use.fontawesome.com/99347ac47f.js"></script>
     <!-- Font Icons CSS-->
@@ -94,12 +94,12 @@
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
             <ul class="list-unstyled">
-                <li><a href="index.jsp"><i class="icon-home"></i>Home</a></li>
-                <li><a href="new_upload.jsp"><i class="fa fa-cloud-upload"></i>New upload</a></li>
-                <li><a href="uploads.jsp"> <i class="fa fa-tachometer"></i>Your Uploads </a></li>
-                <li><a href="suggest_an_idea.jsp"> <i class="fa fa-thumbs-o-up"></i>Suggest an Idea</a></li>
-                <li><a href="bug_report.jsp"> <i class="fa fa-bug"></i>Report a bug </a></li>
-                <li><a href="contact_us.jsp"> <i class="fa fa-envelope-o "></i>Contact us</a></li
+                <li><a href="${pageContext.request.contextPath}/index.jsp"><i class="icon-home"></i>Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/new_upload.jsp"><i class="fa fa-cloud-upload"></i>New upload</a></li>
+                <li><a href="${pageContext.request.contextPath}/uploads.jsp"> <i class="fa fa-tachometer"></i>Your Uploads </a></li>
+                <li><a href="${pageContext.request.contextPath}/suggest_an_idea.jsp"> <i class="fa fa-thumbs-o-up"></i>Suggest an Idea</a></li>
+                <li><a href="${pageContext.request.contextPath}/bug_report.jsp"> <i class="fa fa-bug"></i>Report a bug </a></li>
+                <li><a href="${pageContext.request.contextPath}/contact_us.jsp"> <i class="fa fa-envelope-o "></i>Contact us</a></li
             </ul>
         </nav>
         <div class="content-inner" id="content-inner">
@@ -123,13 +123,13 @@
     </div>
 </div>
 <!-- Javascript files-->
-<script src="/resources/js/jquery.min.js"></script>
-<script src="/resources/js/tether.min.js"></script>
-<script src="/resources/js/bootstrap.min.js"></script>
-<script src="/resources/js/jquery.cookie.js"></script>
-<script src="/resources/js/jquery.validate.min.js"></script>
-<script src="/resources/js/front.js"></script>
-<script src="/resources/js/sticky-footer.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/tether.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.cookie.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/front.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/sticky-footer.js"></script>
 <jsp:invoke fragment="javascript"/>
 </body>
 </html>

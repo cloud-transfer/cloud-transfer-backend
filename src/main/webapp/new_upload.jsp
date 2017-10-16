@@ -15,7 +15,7 @@
     <jsp:attribute name="body_area">
         <ul class="breadcrumb">
             <div class="container-fluid">
-                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+                <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
                 <li class="breadcrumb-item active">Forms</li>
             </div>
         </ul>
@@ -29,7 +29,7 @@
                                   <h3 class="h4">Enter File Information</h3>
                               </div>
                               <div class="card-body">
-                                  <form method="post" id="uploadform" action="api/drive/upload">
+                                  <form method="post" id="uploadform" action="${pageContext.request.contextPath}/api/drive/upload">
                                       <div class="form-group">
                                           <label class="form-control-label">URL</label>
                                           <input type="url" id="url" name="url" placeholder="Enter File URL here"
@@ -50,13 +50,12 @@
                                   </form>
                               </div>
                           </div>
-
                       </div>
                   </div>
               </div>
           </section>
     </jsp:attribute>
     <jsp:attribute name="javascript">
-        <script src="/resources/js/submit_upload.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/submit_upload.js"></script>
     </jsp:attribute>
 </ui:templete>

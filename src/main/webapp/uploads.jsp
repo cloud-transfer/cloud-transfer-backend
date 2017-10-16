@@ -25,12 +25,12 @@
 
         <ul class="breadcrumb">
             <div class="container-fluid">
-                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+                <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
                 <li class="breadcrumb-item active">Your Uploads</li>
             </div>
         </ul>
     </jsp:attribute>
     <jsp:attribute name="javascript">
-        <script src="/resources/js/uploads.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/uploads.js"></script>
     </jsp:attribute>
 </ui:templete>
