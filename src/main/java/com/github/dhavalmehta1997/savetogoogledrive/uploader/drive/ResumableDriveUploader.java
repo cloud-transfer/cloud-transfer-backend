@@ -15,7 +15,7 @@ import static com.github.dhavalmehta1997.savetogoogledrive.utility.HttpUtilities
 
 public class ResumableDriveUploader extends DriveUploader {
 
-    public ResumableDriveUploader(DownloadFileInfo downloadFileInfo, User user) {
+    ResumableDriveUploader(DownloadFileInfo downloadFileInfo, User user) {
         super(downloadFileInfo, user);
     }
 

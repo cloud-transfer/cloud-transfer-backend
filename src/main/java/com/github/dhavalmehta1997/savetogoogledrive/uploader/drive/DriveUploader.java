@@ -50,10 +50,12 @@ abstract class DriveUploader implements Uploader {
         uploadInformation.setUrl(downloadFileInfo.getUploadUrl().toString());
         uploadInformation.setTotalSize(downloadFileInfo.getContentLength());
         try {
-            init();
-        } catch (IOException e) {
+            obtainUploadUrl();
+        } catch (Exception e) {
+            uploadInformation.setUploadStatus(UploadStatus.failed);
+            uploadInformation.setErrorMessage(e.getMessage());
+            uploadInformation.setError(e);
             LOGGER.log(Level.SEVERE, "Exception while initializing" + DriveUploader.class.getName(), e);
-            throw new ExceptionInInitializerError(e);
         }
     }
 
@@ -61,10 +63,6 @@ abstract class DriveUploader implements Uploader {
         chunkSize = 1024 * 1024; // 1 MB
         uploadInformation = new UploadInformation();
         uploadInformation.setUploadStatus(UploadStatus.waiting);
-    }
-
-    private void init() throws IOException {
-        obtainUploadUrl();
     }
 
     /**

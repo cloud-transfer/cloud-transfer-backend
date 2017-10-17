@@ -18,7 +18,7 @@ public class NonResumableDriveUploader extends DriveUploader {
     private static final SecureRandom random = new SecureRandom();
     private File downloadedFile;
 
-    public NonResumableDriveUploader(DownloadFileInfo downloadFileInfo, User user) {
+    NonResumableDriveUploader(DownloadFileInfo downloadFileInfo, User user) {
         super(downloadFileInfo, user);
     }
 
