@@ -50,12 +50,32 @@ function fetchUploads() {
                         var completedPercentage = (this.uploadedSize / this.totalSize * 100).toFixed(1);
 
                         var background = '';
+                        var upload;
 
-                        if (completedPercentage == 100)
-                            background = 'bg-success';
+                        if(this.uploadStatus == failed)
+                        {
+                        	background = 'bg-danger';
+                        	upload = '<section class="dashboard-counts no-padding-bottom uploads">' +
+                            '<div class="container-fluid">' +
+                            '<div class="row bg-white has-shadow upload-info">' +
+                            '<div class="col-xl-12"><span>Name: ' + this.fileName + '</span></div>' +
+                            '<div class="col-xl-3 col-sm-6"><span> Status: ' + this.uploadStatus + ' </span></div>' +
+                            '<div class="col-xl-9 col-sm-6"><span> Status: ' + this.errorMessage + ' </span></div>' +
+                            '<div class="col-xl-12 col-sm-6">' +
+                            '<div class="progress">' +
+                            '<div class="progress-bar ' + background + '" role="progressbar" style="width:' + completedPercentage + '%;" aria-valuenow="' + completedPercentage + '" aria-valuemin="0" aria-valuemax="100">' + completedPercentage + '%</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</section>';
+                        }
+                        else
+                        {
+                            if (completedPercentage == 100)
+                                background = 'bg-success';
 
-
-                        var upload = '<section class="dashboard-counts no-padding-bottom uploads">' +
+                        	upload = '<section class="dashboard-counts no-padding-bottom uploads">' +
                             '<div class="container-fluid">' +
                             '<div class="row bg-white has-shadow upload-info">' +
                             '<div class="col-xl-12"><span>Name: ' + this.fileName + '</span></div>' +
@@ -73,8 +93,9 @@ function fetchUploads() {
                             '</section>';
 
 
+                        }	
+                        
                         $('.push').before(upload);
-                        $(window).resize();
                     });
                 },
                 error: function (xhr) {
