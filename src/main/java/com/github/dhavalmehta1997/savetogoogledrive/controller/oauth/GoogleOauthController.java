@@ -46,7 +46,7 @@ import io.swagger.annotations.ResponseHeader;
  */
 @RestController
 @RequestMapping("/api/oauth/google")
-@Api(value = "handles Google OAuth.", produces = "application/json", consumes = "application/json")
+@Api(description = "handles Google OAuth.", produces = "application/json", consumes = "application/json")
 public class GoogleOauthController {
 
 	private final static String PROFILE_URL = "https://www.googleapis.com/oauth2/v1/userinfo";

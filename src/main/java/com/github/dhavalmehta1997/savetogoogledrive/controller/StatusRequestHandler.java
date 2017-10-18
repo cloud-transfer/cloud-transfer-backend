@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("api/status")
-@Api(value = "handle requests for upload status.")
+@Api(description = "handle requests for upload status.")
 public class StatusRequestHandler {
 
 	private final HttpSession session;
@@ -50,7 +50,7 @@ public class StatusRequestHandler {
 		return new ResponseEntity<>(uploadInformation, HttpStatus.OK);
 	}
 
-	@GetMapping("/")
+	@GetMapping
 	@ApiOperation(value = "gives array of upload information of current user.", response = UploadInformation[].class)
 	@ApiResponses({
 			@ApiResponse(code = 500, message = "There is something wrong at server side. Please contact developers.", response = ApiError.class) })
