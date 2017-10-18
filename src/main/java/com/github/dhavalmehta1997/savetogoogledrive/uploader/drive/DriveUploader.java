@@ -73,6 +73,7 @@ abstract class DriveUploader implements Uploader {
 	void uploadPartially(@NotNull byte[] buffer, long start, long end) {
 		String contentRange = "bytes " + start + "-" + end + "/" + downloadFileInfo.getContentLength();
 
+		int statusCode;
 		try {
 			HttpURLConnection uploadConnection = (HttpURLConnection) createdFileUrl.openConnection();
 			uploadConnection.setDoOutput(true);
@@ -80,16 +81,17 @@ abstract class DriveUploader implements Uploader {
 			uploadConnection.setRequestProperty("Content-Range", contentRange);
 			IOUtils.copy(new ByteArrayInputStream(buffer), uploadConnection.getOutputStream());
 			uploadConnection.connect();
-			int statusCode = uploadConnection.getResponseCode();
-
-			// In case of successful upload, status code will be 3** or 2**
-			if (statusCode < 400)
-				uploadInformation.setUploadedSize(end + 1);
-			else {
-				throw new RuntimeException("Error While uploading file. Status code: " + statusCode);
-			}
-		} catch (Exception e) {
+			statusCode = uploadConnection.getResponseCode();
+		} catch (IOException e) {
 			throw new RuntimeException("Error While uploading file.", e);
+		}
+
+		// In case of successful upload, status code will be 3** or 2**
+		if (statusCode < 400)
+			uploadInformation.setUploadedSize(end + 1);
+		else if (statusCode == 403) {
+			throw new RuntimeException(
+					"Google didn't allow us to create file. Your drive might not have enough space.");
 		}
 	}
 
