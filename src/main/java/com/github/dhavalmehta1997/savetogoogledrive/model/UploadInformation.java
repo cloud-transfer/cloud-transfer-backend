@@ -2,77 +2,68 @@ package com.github.dhavalmehta1997.savetogoogledrive.model;
 
 public class UploadInformation {
 
-    private String url;
-    private String fileName;
-    private long totalSize;
-    private long uploadedSize;
-    private Throwable error;
-    private String errorMessage;
-    private UploadStatus uploadStatus;
-    private double speed;
+	private String url;
+	private String fileName;
+	private long totalSize;
+	private long uploadedSize;
+	private String errorMessage;
+	private UploadStatus uploadStatus;
+	private double speed;
 
-    public String getUrl() {
-        return url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getFileName() {
-        return fileName;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public long getUploadedSize() {
-        return uploadedSize;
-    }
+	public long getUploadedSize() {
+		return uploadedSize;
+	}
 
-    public void setUploadedSize(long uploadedSize) {
-        this.uploadedSize = uploadedSize;
-    }
+	public void setUploadedSize(long uploadedSize) {
+		this.uploadedSize = uploadedSize;
+	}
 
-    public long getTotalSize() {
-        return totalSize;
-    }
+	public long getTotalSize() {
+		return totalSize;
+	}
 
-    public void setTotalSize(long totalSize) {
-        this.totalSize = totalSize;
-    }
+	public void setTotalSize(long totalSize) {
+		this.totalSize = totalSize;
+	}
 
-    public Throwable getError() {
-        return error;
-    }
+	public UploadStatus getUploadStatus() {
+		return uploadStatus;
+	}
 
-    public void setError(Throwable error) {
-        this.error = error;
-    }
+	public void setUploadStatus(UploadStatus uploadStatus) {
+		this.uploadStatus = uploadStatus;
+	}
 
-    public UploadStatus getUploadStatus() {
-        return uploadStatus;
-    }
+	public double getSpeed() {
+		return speed;
+	}
 
-    public void setUploadStatus(UploadStatus uploadStatus) {
-        this.uploadStatus = uploadStatus;
-    }
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
 
-    public double getSpeed() {
-        return speed;
-    }
+	public String getErrorMessage() {
+		return errorMessage;
+	}
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 }
