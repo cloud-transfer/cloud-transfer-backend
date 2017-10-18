@@ -60,7 +60,7 @@ function fetchUploads() {
                             '<div class="row bg-white has-shadow upload-info">' +
                             '<div class="col-xl-12"><span>Name: ' + this.fileName + '</span></div>' +
                             '<div class="col-xl-3 col-sm-6"><span> Status: ' + this.uploadStatus + ' </span></div>' +
-                            '<div class="col-xl-9 col-sm-6"><span> Status: ' + this.errorMessage + ' </span></div>' +
+                            '<div class="col-xl-9 col-sm-6"><span> Message: ' + this.errorMessage + ' </span></div>' +
                             '<div class="col-xl-12 col-sm-6">' +
                             '<div class="progress">' +
                             '<div class="progress-bar ' + background + '" role="progressbar" style="width:' + completedPercentage + '%;" aria-valuenow="' + completedPercentage + '" aria-valuemin="0" aria-valuemax="100">' + completedPercentage + '%</div>' +
