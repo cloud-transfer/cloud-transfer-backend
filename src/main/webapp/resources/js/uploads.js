@@ -52,7 +52,7 @@ function fetchUploads() {
                         var background = '';
                         var upload;
 
-                        if(this.uploadStatus == failed)
+                        if(this.uploadStatus == 'failed')
                         {
                         	background = 'bg-danger';
                         	upload = '<section class="dashboard-counts no-padding-bottom uploads">' +
