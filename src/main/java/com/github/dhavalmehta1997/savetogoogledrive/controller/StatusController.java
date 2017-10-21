@@ -27,12 +27,12 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("api/status")
 @Api(description = "handle requests for upload status.")
-public class StatusRequestHandler {
+public class StatusController {
 
 	private final HttpSession session;
 
 	@Autowired
-	public StatusRequestHandler(HttpSession session) {
+	public StatusController(HttpSession session) {
 		this.session = session;
 	}
 
