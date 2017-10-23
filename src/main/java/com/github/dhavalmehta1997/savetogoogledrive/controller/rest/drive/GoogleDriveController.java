@@ -1,4 +1,4 @@
-package com.github.dhavalmehta1997.savetogoogledrive.controller.drive;
+package com.github.dhavalmehta1997.savetogoogledrive.controller.rest.drive;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

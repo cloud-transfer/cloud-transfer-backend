@@ -18,7 +18,9 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false).select()
-				.apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build().apiInfo(apiInfo());
+				.apis(RequestHandlerSelectors
+						.basePackage("com.github.dhavalmehta1997.savetogoogledrive.controller.rest"))
+				.paths(PathSelectors.any()).build().apiInfo(apiInfo());
 	}
 
 	private ApiInfo apiInfo() {

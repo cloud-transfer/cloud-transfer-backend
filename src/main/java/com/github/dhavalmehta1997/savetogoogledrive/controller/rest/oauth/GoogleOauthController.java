@@ -1,4 +1,4 @@
-package com.github.dhavalmehta1997.savetogoogledrive.controller.oauth;
+package com.github.dhavalmehta1997.savetogoogledrive.controller.rest.oauth;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,9 +90,11 @@ public class GoogleOauthController {
 
 		if (user != null) {
 			session.setAttribute("user", user);
-			response.sendRedirect("/api/oauth/authorized");
-		} else
-			response.sendRedirect("/api/oauth/unauthorized");
+			response.sendRedirect("/");
+		} else {
+			response.setHeader("Location", "");
+			response.sendRedirect("/");
+		}
 	}
 
 	private Token getAccessToken(@NotNull String code) throws IOException {
@@ -114,9 +116,8 @@ public class GoogleOauthController {
 		int statusCode = response.getStatusLine().getStatusCode();
 		InputStream inputStream = response.getEntity().getContent();
 
-		if (HttpUtilities.success(statusCode)) {
+		if (HttpUtilities.success(statusCode))
 			return gson.fromJson(new InputStreamReader(inputStream), Token.class);
-		}
 
 		throw new ApiException(HttpStatus.valueOf(statusCode));
 	}

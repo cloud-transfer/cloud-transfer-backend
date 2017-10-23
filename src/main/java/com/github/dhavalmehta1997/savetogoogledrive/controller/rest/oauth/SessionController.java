@@ -1,4 +1,4 @@
-package com.github.dhavalmehta1997.savetogoogledrive.controller.oauth;
+package com.github.dhavalmehta1997.savetogoogledrive.controller.rest.oauth;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

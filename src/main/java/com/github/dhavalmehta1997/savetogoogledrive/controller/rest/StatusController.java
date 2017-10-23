@@ -1,4 +1,4 @@
-package com.github.dhavalmehta1997.savetogoogledrive.controller;
+package com.github.dhavalmehta1997.savetogoogledrive.controller.rest;
 
 import java.util.ArrayList;
 import java.util.Collections;
