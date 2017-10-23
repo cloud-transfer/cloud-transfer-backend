@@ -16,7 +16,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,7 +73,7 @@
             <div class="sidebar-header d-flex align-items-center">
                 <c:choose>
                     <c:when test='${empty(user)}'>
-                        <div class="avatar"><img src="/resources/img/guest.png" alt="..."
+                        <div class="avatar"><img src="${pageContext.request.contextPath}/resources/img/guest.png" alt="..."
                                                  class="img-fluid rounded-circle"></div>
                         <div class="title">
                             <p>Welcome</p>
@@ -99,7 +98,7 @@
                 <li><a href="${pageContext.request.contextPath}/uploads.jsp"> <i class="fa fa-tachometer"></i>Your Uploads </a></li>
                 <li><a href="${pageContext.request.contextPath}/suggest_an_idea.jsp"> <i class="fa fa-thumbs-o-up"></i>Suggest an Idea</a></li>
                 <li><a href="${pageContext.request.contextPath}/bug_report.jsp"> <i class="fa fa-bug"></i>Report a bug </a></li>
-                <li><a href="${pageContext.request.contextPath}/contact_us.jsp"> <i class="fa fa-envelope-o "></i>Contact us</a></li
+                <li><a href="${pageContext.request.contextPath}/contact_us.jsp"> <i class="fa fa-envelope-o "></i>Contact us</a></li>
             </ul>
         </nav>
         <div class="content-inner" id="content-inner">
