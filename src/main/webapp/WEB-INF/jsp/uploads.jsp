@@ -31,6 +31,6 @@
         </ul>
     </jsp:attribute>
     <jsp:attribute name="javascript">
-        <script src="${pageContext.request.contextPath}/resources/js/uploads.js"></script>
+        <script src="${pageContext.request.contextPath}/js/uploads.js"></script>
     </jsp:attribute>
 </ui:templete>
