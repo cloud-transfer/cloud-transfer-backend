@@ -2182,6 +2182,11 @@ fieldset[disabled] a.btn {
     border-color: #eb9316;
 }
 
+.btn-responsive {
+    white-space: normal !important;
+    word-wrap: break-word;
+} 
+
 .btn-danger {
     color: #fff;
     background-color: #d9534f;

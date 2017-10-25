@@ -18,15 +18,15 @@
 	                    <c:choose>
 	                        <c:when test='${empty(user)}'>
 	                            <p style="font-size: 20px; color: red">You are not authenticated. Please authenticate with Google. </p>
-	                            	<button id="auth-btn" class="btn btn-link" style="font-size: larger;" onclick="location.href = '${pageContext.request.contextPath}/api/oauth/google/redirect'">
+	                            	<button id="auth-btn" class="btn btn-link btn-responsive" style="font-size: larger;" onclick="location.href = '${pageContext.request.contextPath}/api/oauth/google/redirect'">
 	                                  Click here to authenticate with Google
 	                             </button>
 	                        </c:when>
                         	<c:otherwise>	                         
                         		<p style="font-size: 20px; color: green">Hi, <c:out value="${user.name}" default="Guest" />. </p>   
-	                            <p style="font-size: 20px; color: green">Congratulations! You are successfully authenticated with Google
+	                            <p style="font-size: 20px; color: green; word-wrap:break-word">Congratulations! You are successfully authenticated with Google
 	                                using your Google account: <c:out value="${user.email}"/>. </p>
-                                 <button id="auth-btn" class="btn btn-link" style="font-size: larger;" onclick="location.href = '${pageContext.request.contextPath}/api/oauth/google/redirect'">
+                                 <button id="auth-btn" class="btn btn-link btn-responsive" style="font-size: larger;" onclick="location.href = '${pageContext.request.contextPath}/api/oauth/google/redirect'">
                                      Click here to change Google account
                                  </button>
 	                        </c:otherwise>

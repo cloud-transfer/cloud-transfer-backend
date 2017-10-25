@@ -100,6 +100,8 @@ $(document).ready(function () {
         if ($(window).outerWidth() < 1183) {
             $('.navbar-header .brand-small').show();
         }
+        
+        adjust_footer();
     });
 
     // ------------------------------------------------------- //
