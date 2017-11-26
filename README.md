@@ -69,10 +69,10 @@ $ git clone https://github.com/dhavalmehta1997/url-to-google-drive
 $ cd url-to-google-drive
 
 # Build the app
-$ mvnw package
+$ ./mvnw package
 
 # Run the app
-$ mvnw spring-boot:run
+$ ./mvnw spring-boot:run
 ```
 
 ## Built With
