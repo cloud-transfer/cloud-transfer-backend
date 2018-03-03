@@ -9,8 +9,8 @@
 <div align="center">
 
   <!-- Build Status -->
-  <a href="https://travis-ci.org/dhavalmehta1997/url-to-google-drive">
-    <img src="https://travis-ci.org/dhavalmehta1997/url-to-google-drive.svg?branch=master"
+  <a href="https://travis-ci.org/dhaval-mehta/url-to-google-drive">
+    <img src="https://travis-ci.org/dhaval-mehta/url-to-google-drive.svg?branch=master"
       alt="Build Status" />
   </a>
  
@@ -21,14 +21,14 @@
   </a>
 
  <!-- issues -->
-  <a href="https://github.com/dhavalmehta1997/url-to-google-drive/issues">
-    <img src="https://img.shields.io/github/issues/dhavalmehta1997/url-to-google-drive.svg"
+  <a href="https://github.com/dhaval-mehta/url-to-google-drive/issues">
+    <img src="https://img.shields.io/github/issues/dhaval-mehta/url-to-google-drive.svg"
       alt="Issues" />
   </a>
   
  <!-- License --> 
-  <a href="https://github.com/dhavalmehta1997/url-to-google-drive/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/dhavalmehta1997/url-to-google-drive.svg"
+  <a href="https://github.com/dhaval-mehta/url-to-google-drive/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/dhaval-mehta/url-to-google-drive.svg"
       alt="License MIT" />
   </a>
 </div>
@@ -63,7 +63,7 @@ Here is a working live demo: [https://savetogoogledrive.herokuapp.com](https://s
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/dhavalmehta1997/url-to-google-drive
+$ git clone https://github.com/dhaval-mehta/url-to-google-drive
 
 # Go into the repository
 $ cd url-to-google-drive
@@ -88,15 +88,15 @@ This application uses several open source packages to run.
 
 ## Bug Report
 
-If you find a bug (the website couldn't handle the upload request and / or gave undesired results), kindly open an issue [here](https://github.com/dhavalmehta1997/url-to-google-drive/issues/new) by including your upload URL.
+If you find a bug (the website couldn't handle the upload request and / or gave undesired results), kindly open an issue [here](https://github.com/dhaval-mehta/url-to-google-drive/issues/new) by including your upload URL.
 
 ## Feature Request
 
-Feature requests are always welcome. If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/dhavalmehta1997/url-to-google-drive/issues/new). Please include sample queries and their corresponding results.
+Feature requests are always welcome. If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/dhaval-mehta/url-to-google-drive/issues/new). Please include sample queries and their corresponding results.
 
 ## Team
 
-- [Dhaval Mehta](https://github.com/dhavalmehta1997)
+- [Dhaval Mehta](https://github.com/dhaval-mehta)
 - [Aditya Krishnakumar](https://github.com/beingadityak)
 
 ## Links
@@ -104,8 +104,8 @@ Feature requests are always welcome. If you'd like to request a new function, fe
 * [Web site](https://savetogoogledrive.herokuapp.com)
 * [Documentation](https://savetogoogledrive.herokuapp.com/swagger-ui.html)
 * [Bug Report](https://savetogoogledrive.herokuapp.com/bug_report.jsp)
-* [Issue tracker](https://github.com/dhavalmehta1997/url-to-google-drive/issues)
-* [Source code](https://github.com/dhavalmehta1997/url-to-google-drive/)
+* [Issue tracker](https://github.com/dhaval-mehta/url-to-google-drive/issues)
+* [Source code](https://github.com/dhaval-mehta/url-to-google-drive/)
 
 ## Contributing
 
