@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.task_manager;
+package com.github.dhaval_mehta.savetogoogledrive.task;
 
 import java.util.Hashtable;
 import java.util.UUID;
@@ -14,7 +14,7 @@ public class DownloadManager {
         instance = new DownloadManager();
     }
 
-    private Hashtable<String, DownloadTask> tasks;
+    private Hashtable<String, TransferTask> tasks;
     private ExecutorService executorService;
 
     private DownloadManager() {
@@ -26,7 +26,7 @@ public class DownloadManager {
         return instance;
     }
 
-    public Future<?> addTask(DownloadTask task) {
+    public Future<?> addTask(TransferTask task) {
         tasks.put(UUID.randomUUID().toString(), task);
         return executorService.submit(task);
     }

@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.utility;
+package com.github.dhaval_mehta.savetogoogledrive.util;
 
 public class HttpUtilities {
 

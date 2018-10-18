@@ -1,5 +1,6 @@
-package com.github.dhaval_mehta.savetogoogledrive.task_manager;
+package com.github.dhaval_mehta.savetogoogledrive.task;
 
+import com.github.dhaval_mehta.savetogoogledrive.util.ProgressBufferedInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,10 +11,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class DownloadTask implements Runnable {
+public class DownloadTask implements TransferTask<File> {
 
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .followRedirects(HttpClient.Redirect.ALWAYS)
@@ -23,12 +22,9 @@ public class DownloadTask implements Runnable {
     private URI uri;
     private File file;
     private Map<String, String> headers;
-    private Timer timer = new Timer();
     private long contentLength;
-    private long downloadSize;
-    private long startTime;
-    private DownloadSpeedMeter speedMeter = new DownloadSpeedMeter();
     private String mimeType;
+    private ProgressBufferedInputStream responseStream;
 
     public DownloadTask(URI uri, File downloadFile) {
         this.uri = uri;
@@ -50,12 +46,8 @@ public class DownloadTask implements Runnable {
         }
     }
 
-    public double averageSpeed() {
-        return ((double) downloadSize * 1000) / (System.currentTimeMillis() - startTime);
-    }
-
     public double currentSpeed() {
-        return speedMeter.currentSpeed();
+        return responseStream.currentSpeed();
     }
 
     public long getContentLength() {
@@ -67,41 +59,23 @@ public class DownloadTask implements Runnable {
     }
 
     @Override
-    public void run() {
-        startTime = System.currentTimeMillis();
-        timer.schedule(speedMeter, 0, 1000);
-        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file), 10240000)) {
+    public File call() {
+        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file), 102400)) {
             var response = sendHttpRequest();
-            var responseBody = new BufferedInputStream(response.body());
-            setContentLength(response);
             setContentType(response);
-            while (true) {
-                boolean completed = writeIntoFile(responseBody, outputStream);
-                if (completed)
-                    break;
-            }
+            responseStream = new ProgressBufferedInputStream(response.body());
+            responseStream.transferTo(outputStream);
+            responseStream.close();
         } catch (IOException | InterruptedException e) {
             logger.error(null, e);
         }
-        timer.cancel();
-    }
-
-    private boolean writeIntoFile(BufferedInputStream responseBody, BufferedOutputStream outputStream)
-            throws IOException {
-        byte[] buffer = responseBody.readNBytes(102400);
-        if (buffer.length == 0)
-            return true;
-        outputStream.write(buffer);
-        downloadSize += buffer.length;
-        return false;
+        return file;
     }
 
     private HttpResponse<InputStream> sendHttpRequest() throws IOException, InterruptedException {
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder(uri).GET();
         headers.forEach(requestBuilder::header);
-        return httpClient.send(
-                requestBuilder.build(), HttpResponse.BodyHandlers.ofInputStream());
-
+        return httpClient.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofInputStream());
     }
 
     private void setContentType(HttpResponse<InputStream> response) {
@@ -110,26 +84,5 @@ public class DownloadTask implements Runnable {
 
     public String getMimeType() {
         return mimeType;
-    }
-
-    private class DownloadSpeedMeter extends TimerTask {
-
-        private double prevDownloadedSize;
-        private long prevExecutionTime;
-        private double currentSpeed;
-
-        @Override
-        public void run() {
-            if (downloadSize - prevDownloadedSize == 0)
-                return;
-            long currentTime = System.currentTimeMillis();
-            currentSpeed = (downloadSize - prevDownloadedSize) / ((double) (currentTime - prevExecutionTime) / 1000);
-            prevExecutionTime = currentTime;
-            prevDownloadedSize = downloadSize;
-        }
-
-        double currentSpeed() {
-            return currentSpeed;
-        }
     }
 }

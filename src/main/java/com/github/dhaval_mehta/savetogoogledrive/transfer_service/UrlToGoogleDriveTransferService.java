@@ -2,8 +2,8 @@ package com.github.dhaval_mehta.savetogoogledrive.transfer_service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.dhaval_mehta.savetogoogledrive.task_manager.DownloadManager;
-import com.github.dhaval_mehta.savetogoogledrive.task_manager.DownloadTask;
+import com.github.dhaval_mehta.savetogoogledrive.task.DownloadManager;
+import com.github.dhaval_mehta.savetogoogledrive.task.DownloadTask;
 import com.github.dhaval_mehta.savetogoogledrive.exception.ApiException;
 import com.github.dhaval_mehta.savetogoogledrive.model.token.GoogleDriveToken;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.ExecutionException;
 
-import static com.github.dhaval_mehta.savetogoogledrive.utility.HttpUtilities.USER_AGENT;
+import static com.github.dhaval_mehta.savetogoogledrive.util.HttpUtilities.USER_AGENT;
 
 public class UrlToGoogleDriveTransferService implements TransferService {
     private static final HttpClient httpClient = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();

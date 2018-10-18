@@ -5,7 +5,7 @@ import com.github.dhaval_mehta.savetogoogledrive.exception.ApiException;
 import com.github.dhaval_mehta.savetogoogledrive.model.User;
 import com.github.dhaval_mehta.savetogoogledrive.model.token.GoogleDriveToken;
 import com.github.dhaval_mehta.savetogoogledrive.model.token.Token;
-import com.github.dhaval_mehta.savetogoogledrive.utility.HttpUtilities;
+import com.github.dhaval_mehta.savetogoogledrive.util.HttpUtilities;
 import io.swagger.annotations.*;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
