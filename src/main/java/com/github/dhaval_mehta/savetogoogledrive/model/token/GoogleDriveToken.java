@@ -39,7 +39,7 @@ public class GoogleDriveToken implements Token {
         try {
             HttpResponse<String> response = sendRefreshTokenRequest();
             if (response.statusCode() != 200) {
-                logger.error("Unexpected status code while refreshing token: " + response.statusCode(), response.body());
+                logger.error("Error while refreshing token: " + response.statusCode(), response.body());
                 return;
             }
             JsonNode responseJson = mapper.readTree(response.body());

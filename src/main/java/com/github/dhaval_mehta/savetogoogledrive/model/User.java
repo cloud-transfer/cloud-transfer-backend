@@ -1,6 +1,13 @@
 package com.github.dhaval_mehta.savetogoogledrive.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.github.dhaval_mehta.savetogoogledrive.model.token.Token;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class User {
 
@@ -23,4 +30,6 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    private Set<Token> tokens = new HashSet<>();
 }
