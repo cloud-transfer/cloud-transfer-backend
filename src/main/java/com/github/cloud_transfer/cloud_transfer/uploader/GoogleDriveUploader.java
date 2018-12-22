@@ -1,10 +1,10 @@
-package com.github.dhaval_mehta.cloud_transfer.uploader;
+package com.github.cloud_transfer.cloud_transfer.uploader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.dhaval_mehta.cloud_transfer.model.exception.ApiException;
-import com.github.dhaval_mehta.cloud_transfer.model.token.GoogleDriveToken;
-import com.github.dhaval_mehta.cloud_transfer.util.ProgressBufferedInputStream;
+import com.github.cloud_transfer.cloud_transfer.model.exception.ApiException;
+import com.github.cloud_transfer.cloud_transfer.model.token.GoogleDriveToken;
+import com.github.cloud_transfer.cloud_transfer.util.ProgressBufferedInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 

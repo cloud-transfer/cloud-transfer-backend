@@ -1,6 +1,6 @@
-package com.github.dhaval_mehta.cloud_transfer.downloader;
+package com.github.cloud_transfer.cloud_transfer.downloader;
 
-import com.github.dhaval_mehta.cloud_transfer.model.DownloadInformation;
+import com.github.cloud_transfer.cloud_transfer.model.DownloadInformation;
 
 import java.io.IOException;
 

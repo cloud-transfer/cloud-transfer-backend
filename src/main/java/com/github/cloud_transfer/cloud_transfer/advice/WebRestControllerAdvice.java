@@ -1,15 +1,15 @@
-package com.github.dhaval_mehta.cloud_transfer.advice;
+package com.github.cloud_transfer.cloud_transfer.advice;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.github.dhaval_mehta.cloud_transfer.model.exception.ApiException;
-import com.github.dhaval_mehta.cloud_transfer.model.ApiError;
+import com.github.cloud_transfer.cloud_transfer.model.ApiError;
+import com.github.cloud_transfer.cloud_transfer.model.exception.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ControllerAdvice
 public class WebRestControllerAdvice {

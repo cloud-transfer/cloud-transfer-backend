@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.cloud_transfer.transfer_service;
+package com.github.cloud_transfer.cloud_transfer.transfer_service;
 
 import java.util.Hashtable;
 import java.util.UUID;

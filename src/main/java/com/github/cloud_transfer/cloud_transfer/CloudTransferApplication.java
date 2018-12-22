@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.cloud_transfer;
+package com.github.cloud_transfer.cloud_transfer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

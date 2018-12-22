@@ -1,9 +1,9 @@
-package com.github.dhaval_mehta.cloud_transfer.transfer_service;
+package com.github.cloud_transfer.cloud_transfer.transfer_service;
 
-import com.github.dhaval_mehta.cloud_transfer.downloader.URLDownloader;
-import com.github.dhaval_mehta.cloud_transfer.model.DownloadInformation;
-import com.github.dhaval_mehta.cloud_transfer.model.TransferStatus;
-import com.github.dhaval_mehta.cloud_transfer.uploader.Uploader;
+import com.github.cloud_transfer.cloud_transfer.downloader.URLDownloader;
+import com.github.cloud_transfer.cloud_transfer.model.DownloadInformation;
+import com.github.cloud_transfer.cloud_transfer.model.TransferStatus;
+import com.github.cloud_transfer.cloud_transfer.uploader.Uploader;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;

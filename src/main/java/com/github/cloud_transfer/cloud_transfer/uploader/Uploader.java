@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.cloud_transfer.uploader;
+package com.github.cloud_transfer.cloud_transfer.uploader;
 
 import java.io.IOException;
 

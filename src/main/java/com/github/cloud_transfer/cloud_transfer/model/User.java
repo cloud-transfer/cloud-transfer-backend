@@ -1,12 +1,9 @@
-package com.github.dhaval_mehta.cloud_transfer.model;
+package com.github.cloud_transfer.cloud_transfer.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.github.dhaval_mehta.cloud_transfer.model.token.Token;
+import com.github.cloud_transfer.cloud_transfer.model.token.Token;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class User {
@@ -18,6 +15,7 @@ public class User {
     private String profilePhotoUrl;
 
     private String email;
+    private Set<Token> tokens = new HashSet<>();
 
     public String getName() {
         return name;
@@ -30,6 +28,4 @@ public class User {
     public String getEmail() {
         return email;
     }
-
-    private Set<Token> tokens = new HashSet<>();
 }
