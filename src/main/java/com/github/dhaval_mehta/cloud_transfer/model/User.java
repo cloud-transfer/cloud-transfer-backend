@@ -1,7 +1,7 @@
-package com.github.dhaval_mehta.savetogoogledrive.model;
+package com.github.dhaval_mehta.cloud_transfer.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.github.dhaval_mehta.savetogoogledrive.model.token.Token;
+import com.github.dhaval_mehta.cloud_transfer.model.token.Token;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

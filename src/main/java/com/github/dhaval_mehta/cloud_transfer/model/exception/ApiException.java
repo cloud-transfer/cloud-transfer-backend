@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.exception;
+package com.github.dhaval_mehta.cloud_transfer.model.exception;
 
 import org.springframework.http.HttpStatus;
 

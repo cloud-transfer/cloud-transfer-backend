@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.model.token;
+package com.github.dhaval_mehta.cloud_transfer.model.token;
 
 public interface Token {
     String getAccessToken();

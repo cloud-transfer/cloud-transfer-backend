@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.model.token;
+package com.github.dhaval_mehta.cloud_transfer.model.token;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,15 +54,14 @@ public class GoogleDriveToken implements Token {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest refreshTokenRequest = HttpRequest.newBuilder()
                 .uri(URI.create("https://www.googleapis.com/oauth2/v4/token"))
-                .POST(HttpRequest.BodyPublishers.ofString(postBody()))
+                .POST(HttpRequest.BodyPublishers.ofString(refreshTokenRequestBody()))
                 .build();
 
         return httpClient.send(refreshTokenRequest, HttpResponse.BodyHandlers.ofString());
     }
 
-    private String postBody() {
+    private String refreshTokenRequestBody() {
         ObjectNode body = mapper.createObjectNode();
-        body.put("client_id", System.getenv("client_id"));
         body.put("client_id", System.getenv("client_id"));
         body.put("client_secret", System.getenv("client_secret"));
         body.put("grant_type", "refresh_token");

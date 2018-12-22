@@ -1,10 +1,10 @@
-package com.github.dhaval_mehta.savetogoogledrive.advice;
+package com.github.dhaval_mehta.cloud_transfer.advice;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.dhaval_mehta.savetogoogledrive.exception.ApiException;
-import com.github.dhaval_mehta.savetogoogledrive.model.ApiError;
+import com.github.dhaval_mehta.cloud_transfer.model.exception.ApiException;
+import com.github.dhaval_mehta.cloud_transfer.model.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

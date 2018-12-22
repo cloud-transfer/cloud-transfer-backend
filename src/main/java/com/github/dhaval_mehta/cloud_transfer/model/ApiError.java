@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.model;
+package com.github.dhaval_mehta.cloud_transfer.model;
 
 import org.springframework.http.HttpStatus;
 
