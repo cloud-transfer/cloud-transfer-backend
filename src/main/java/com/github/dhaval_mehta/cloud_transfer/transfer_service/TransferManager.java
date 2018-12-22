@@ -1,4 +1,4 @@
-package com.github.dhaval_mehta.savetogoogledrive.transfer_service;
+package com.github.dhaval_mehta.cloud_transfer.transfer_service;
 
 import java.util.Hashtable;
 import java.util.UUID;
