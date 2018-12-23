@@ -1,6 +1,6 @@
-package com.github.cloud_transfer.cloud_transfer.uploader;
+package com.github.cloud_transfer.cloud_transfer_backend.uploader;
 
-import com.github.cloud_transfer.cloud_transfer.model.SpeedMeter;
+import com.github.cloud_transfer.cloud_transfer_backend.model.SpeedMeter;
 
 import java.io.IOException;
 

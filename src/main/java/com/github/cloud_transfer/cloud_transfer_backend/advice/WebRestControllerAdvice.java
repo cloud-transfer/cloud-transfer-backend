@@ -1,7 +1,7 @@
-package com.github.cloud_transfer.cloud_transfer.advice;
+package com.github.cloud_transfer.cloud_transfer_backend.advice;
 
-import com.github.cloud_transfer.cloud_transfer.model.ApiError;
-import com.github.cloud_transfer.cloud_transfer.model.exception.ApiException;
+import com.github.cloud_transfer.cloud_transfer_backend.model.ApiError;
+import com.github.cloud_transfer.cloud_transfer_backend.model.exception.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

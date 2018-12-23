@@ -1,7 +1,7 @@
-package com.github.cloud_transfer.cloud_transfer.model.token;
+package com.github.cloud_transfer.cloud_transfer_backend.model.token;
 
 
-import com.github.cloud_transfer.cloud_transfer.model.User;
+import com.github.cloud_transfer.cloud_transfer_backend.model.User;
 import lombok.Data;
 
 import javax.persistence.*;

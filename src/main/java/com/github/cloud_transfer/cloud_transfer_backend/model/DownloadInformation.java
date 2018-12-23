@@ -1,4 +1,4 @@
-package com.github.cloud_transfer.cloud_transfer.model;
+package com.github.cloud_transfer.cloud_transfer_backend.model;
 
 import java.io.File;
 

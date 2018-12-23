@@ -1,6 +1,6 @@
-package com.github.cloud_transfer.cloud_transfer.model;
+package com.github.cloud_transfer.cloud_transfer_backend.model;
 
-import com.github.cloud_transfer.cloud_transfer.model.token.Token;
+import com.github.cloud_transfer.cloud_transfer_backend.model.token.Token;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

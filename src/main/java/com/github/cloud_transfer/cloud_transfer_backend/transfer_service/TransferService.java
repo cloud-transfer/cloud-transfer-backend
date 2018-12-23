@@ -1,10 +1,10 @@
-package com.github.cloud_transfer.cloud_transfer.transfer_service;
+package com.github.cloud_transfer.cloud_transfer_backend.transfer_service;
 
-import com.github.cloud_transfer.cloud_transfer.downloader.URLDownloader;
-import com.github.cloud_transfer.cloud_transfer.model.DownloadInformation;
-import com.github.cloud_transfer.cloud_transfer.model.SpeedMeter;
-import com.github.cloud_transfer.cloud_transfer.model.TransferStatus;
-import com.github.cloud_transfer.cloud_transfer.uploader.Uploader;
+import com.github.cloud_transfer.cloud_transfer_backend.downloader.URLDownloader;
+import com.github.cloud_transfer.cloud_transfer_backend.model.DownloadInformation;
+import com.github.cloud_transfer.cloud_transfer_backend.model.SpeedMeter;
+import com.github.cloud_transfer.cloud_transfer_backend.model.TransferStatus;
+import com.github.cloud_transfer.cloud_transfer_backend.uploader.Uploader;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;

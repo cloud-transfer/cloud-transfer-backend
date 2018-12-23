@@ -1,7 +1,7 @@
-package com.github.cloud_transfer.cloud_transfer.downloader;
+package com.github.cloud_transfer.cloud_transfer_backend.downloader;
 
-import com.github.cloud_transfer.cloud_transfer.model.DownloadInformation;
-import com.github.cloud_transfer.cloud_transfer.util.ProgressBufferedInputStream;
+import com.github.cloud_transfer.cloud_transfer_backend.model.DownloadInformation;
+import com.github.cloud_transfer.cloud_transfer_backend.util.ProgressBufferedInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

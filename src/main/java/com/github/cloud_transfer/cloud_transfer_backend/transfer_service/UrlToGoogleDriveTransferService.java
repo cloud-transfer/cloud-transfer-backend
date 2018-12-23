@@ -1,9 +1,9 @@
-package com.github.cloud_transfer.cloud_transfer.transfer_service;
+package com.github.cloud_transfer.cloud_transfer_backend.transfer_service;
 
-import com.github.cloud_transfer.cloud_transfer.downloader.URLDownloader;
-import com.github.cloud_transfer.cloud_transfer.model.token.GoogleDriveToken;
-import com.github.cloud_transfer.cloud_transfer.uploader.GoogleDriveUploader;
-import com.github.cloud_transfer.cloud_transfer.uploader.Uploader;
+import com.github.cloud_transfer.cloud_transfer_backend.downloader.URLDownloader;
+import com.github.cloud_transfer.cloud_transfer_backend.model.token.GoogleDriveToken;
+import com.github.cloud_transfer.cloud_transfer_backend.uploader.GoogleDriveUploader;
+import com.github.cloud_transfer.cloud_transfer_backend.uploader.Uploader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.MultiValueMap;
 

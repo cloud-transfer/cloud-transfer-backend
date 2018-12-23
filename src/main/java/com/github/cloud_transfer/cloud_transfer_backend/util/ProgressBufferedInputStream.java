@@ -1,4 +1,4 @@
-package com.github.cloud_transfer.cloud_transfer.util;
+package com.github.cloud_transfer.cloud_transfer_backend.util;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

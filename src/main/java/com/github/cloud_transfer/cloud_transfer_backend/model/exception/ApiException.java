@@ -1,4 +1,4 @@
-package com.github.cloud_transfer.cloud_transfer.model.exception;
+package com.github.cloud_transfer.cloud_transfer_backend.model.exception;
 
 import org.springframework.http.HttpStatus;
 
