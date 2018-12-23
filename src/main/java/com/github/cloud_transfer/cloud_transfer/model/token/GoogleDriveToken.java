@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -13,13 +16,20 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 
-public class GoogleDriveToken implements Token {
+@Entity
+@DiscriminatorValue(value = TokenType.GoogleDriveToken)
+public class GoogleDriveToken extends Token {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleDriveToken.class);
     private static final ObjectMapper mapper = new ObjectMapper();
+
+    @Column(name = "access_token")
     private String accessToken;
-    private String tokenType;
+
+    @Column(name = "refresh_token")
     private String refreshToken;
+
+    @Column(name = "expiry_time", nullable = false)
     private LocalDateTime expiryTime;
 
     @Override
@@ -28,11 +38,6 @@ public class GoogleDriveToken implements Token {
             refreshToken();
 
         return accessToken;
-    }
-
-    @Override
-    public TokenType getType() {
-        return TokenType.GoogleDriveToken;
     }
 
     private void refreshToken() {

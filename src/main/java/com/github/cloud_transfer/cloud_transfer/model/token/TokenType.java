@@ -1,5 +1,5 @@
 package com.github.cloud_transfer.cloud_transfer.model.token;
 
-public enum TokenType {
-    GoogleDriveToken
+class TokenType {
+    static final String GoogleDriveToken = "google_drive";
 }
