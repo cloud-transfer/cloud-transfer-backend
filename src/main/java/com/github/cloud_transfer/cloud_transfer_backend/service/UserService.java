@@ -20,7 +20,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -30,5 +30,9 @@ public class UserService {
 
     public Optional<User> findById(UUID id) {
         return userRepository.findById(id);
+    }
+
+    public void updateUser(User user, UUID id) {
+        userRepository.save(user);
     }
 }
