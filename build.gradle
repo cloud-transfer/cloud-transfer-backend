@@ -31,6 +31,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('de.codecentric:spring-boot-admin-starter-server')
 	runtimeOnly('org.postgresql:postgresql')
+	annotationProcessor("org.projectlombok:lombok")
 	compileOnly('org.projectlombok:lombok')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
