@@ -24,8 +24,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void createUser(User user) {
+    public User createUser(User user) {
         userRepository.save(user);
+        return user;
     }
 
     public Optional<User> findById(UUID id) {
