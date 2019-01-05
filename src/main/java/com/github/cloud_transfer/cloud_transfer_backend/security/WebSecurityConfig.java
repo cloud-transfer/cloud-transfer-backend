@@ -1,6 +1,5 @@
 package com.github.cloud_transfer.cloud_transfer_backend.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,7 +16,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfig jwtConfig;
 
-    @Autowired
     public WebSecurityConfig(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
     }
@@ -32,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, jwtConfig.getUri()).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
