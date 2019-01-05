@@ -35,4 +35,5 @@ dependencies {
 	compile('io.jsonwebtoken:jjwt-api:0.10.5')
 	runtime('io.jsonwebtoken:jjwt-impl:0.10.5')
 	runtime('io.jsonwebtoken:jjwt-jackson:0.10.5')
+	compile('com.google.api-client:google-api-client:1.25.0')
 }
