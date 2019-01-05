@@ -1,4 +1,4 @@
-package com.github.cloud_transfer.cloud_transfer_backend.util.oauth;
+package com.github.cloud_transfer.cloud_transfer_backend.authentication.oauth;
 
 import javax.validation.constraints.NotNull;
 
