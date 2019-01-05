@@ -1,11 +1,11 @@
 package com.github.cloud_transfer.cloud_transfer_backend.controller.login;
 
+import com.github.cloud_transfer.cloud_transfer_backend.authentication.oauth.OauthLoginProvider;
+import com.github.cloud_transfer.cloud_transfer_backend.authentication.oauth.OauthLoginProviderFactory;
+import com.github.cloud_transfer.cloud_transfer_backend.authentication.oauth.OauthLoginProviders;
 import com.github.cloud_transfer.cloud_transfer_backend.model.User;
 import com.github.cloud_transfer.cloud_transfer_backend.security.JwtTokenIssuer;
 import com.github.cloud_transfer.cloud_transfer_backend.service.UserService;
-import com.github.cloud_transfer.cloud_transfer_backend.util.oauth.OauthLoginProvider;
-import com.github.cloud_transfer.cloud_transfer_backend.util.oauth.OauthLoginProviderFactory;
-import com.github.cloud_transfer.cloud_transfer_backend.util.oauth.OauthLoginProviders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
