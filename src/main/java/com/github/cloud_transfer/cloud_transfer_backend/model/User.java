@@ -24,7 +24,9 @@ public class User {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String name;
+    private String firstName = "";
+
+    private String lastName = "";
 
     @Column(nullable = false)
     private String email;
@@ -39,4 +41,8 @@ public class User {
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public String getName() {
+        return String.format("%s %s", firstName, lastName);
+    }
 }
