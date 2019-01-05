@@ -36,4 +36,9 @@ public class UserService {
     public void updateUser(User user, UUID id) {
         userRepository.save(user);
     }
+
+    public User findByEmailOrCreate(User user) {
+        return findUserByEmail(user.getEmail())
+                .orElseGet(() -> createUser(user));
+    }
 }

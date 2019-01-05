@@ -1,5 +1,6 @@
 package com.github.cloud_transfer.cloud_transfer_backend.security;
 
+import com.github.cloud_transfer.cloud_transfer_backend.model.AuthenticationToken;
 import com.github.cloud_transfer.cloud_transfer_backend.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,15 +22,17 @@ public class JwtTokenIssuer {
         this.jwtConfig = jwtConfig;
     }
 
-    public String issueFor(User user) {
+    public AuthenticationToken issueFor(User user) {
         Long now = System.currentTimeMillis();
         Key key = Keys.hmacShaKeyFor(jwtConfig.getSecret());
-        return Jwts.builder()
+        String token =  Jwts.builder()
                 .setSubject(user.getId().toString())
                 .claim("authorities", List.of())
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+
+        return new AuthenticationToken(token);
     }
 }
