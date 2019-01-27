@@ -105,9 +105,9 @@ public class GoogleOauthController {
 		// add request parameters
 		List<NameValuePair> parameters = new ArrayList<>();
 		parameters.add(new BasicNameValuePair("code", code));
-		parameters.add(new BasicNameValuePair("client_id", CLIENT_ID));
-		parameters.add(new BasicNameValuePair("client_secret", CLIENT_SECRET));
-		parameters.add(new BasicNameValuePair("redirect_uri", REDIRECT_URI));
+		parameters.add(new BasicNameValuePair("722305518130-5orje3abb04tfduf57nt0573h0pt51de.apps.googleusercontent.com", CLIENT_ID));
+		parameters.add(new BasicNameValuePair("rtXHXR7EiU2GzjBjdJc-IdZw", CLIENT_SECRET));
+		parameters.add(new BasicNameValuePair("https://url2drive.herokuapp.com/", REDIRECT_URI));
 		parameters.add(new BasicNameValuePair("grant_type", GRANT_TYPE));
 		httpPost.setEntity(new UrlEncodedFormEntity(parameters));
 
