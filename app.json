@@ -1,0 +1,21 @@
+{
+    "name": "Save To Google Drive",
+    "description": "Java App to Upload files directly to Google Drive",
+    "repository": "https://github.com/cloud-transfer/cloud-transfer-backend",
+    "logo": "https://raw.githubusercontent.com/ParveenBhadooOfficial/SaveToGoogleDrive/master/src/main/resources/static/img/savetodrive.png",
+    "keywords": ["google","drive","cloud"],
+    "env": {
+        "client_id": {
+            "description": "Client ID from Google Console (http://bit.ly/37ED7dv)",
+            "value": ""
+        },
+        "client_secret": {
+            "description": "Client Secret from Google Console (http://bit.ly/37ED7dv)",
+            "value": ""
+        },
+        "redirect_uri": {
+            "description": "Your App URL eg. https://appname.herokuapp.com/api/oauth/google/callback (Replace this with your own)",
+            "value": ""
+        }
+    }
+}
