@@ -86,6 +86,10 @@ This application uses several open source packages to run.
 - [Apache commons io](https://commons.apache.org/proper/commons-io/)
 - [Apache Tomcat](http://tomcat.apache.org/)
 
+## Deploy to Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## Bug Report
 
 If you find a bug (the website couldn't handle the upload request and / or gave undesired results), kindly open an issue [here](https://github.com/dhaval-mehta/url-to-google-drive/issues/new) by including your upload URL.
