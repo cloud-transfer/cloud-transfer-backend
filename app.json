@@ -17,5 +17,6 @@
             "description": "Your App URL eg. https://appname.herokuapp.com/api/oauth/google/callback (Replace this with your own)",
             "value": ""
         }
-    }
+    },
+    "stack": "heroku-20"
 }
